@@ -37,7 +37,7 @@ app.post('/api/authenticate', account_controller.logon);
 
 
 app.get('/home', function(req, res) {
-		res.sendfile('./public/dashboard.html'); // load the single view file 
+		res.sendfile('./public/dashboard2.html'); // load the single view file 
 	});
 
 app.get('*', function(req, res) {

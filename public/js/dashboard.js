@@ -16,7 +16,7 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
         .state('index', {
             url: '/',
             controller: DashBoardCtrl,
-            templateUrl: 'dashboard.html'
+            templateUrl: 'partial/dashboard.html'
         })
         .state('tables', {
             url: '/tables', 
@@ -37,6 +37,10 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
         .state('personagem', {
             url: '/personagem', 
             templateUrl: 'partial/personagem.html'
+        })
+        .state('personagens', {
+            url: '/personagens', 
+            templateUrl: 'partial/personagens.html'
         })        ;
 }]);
 
