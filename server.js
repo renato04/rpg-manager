@@ -33,6 +33,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride());
 
 app.post('/api/account', account_controller.create);
+app.post('/api/authenticate', account_controller.authenticate);
 
 
 app.get('/home', function(req, res) {

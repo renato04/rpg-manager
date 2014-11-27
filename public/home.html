@@ -75,37 +75,40 @@
           I want to know, have you ever seen the rain?
         </p>
 
-        <form name="form" class="margin-base-vertical" autocomplete="off" novalidate submitted="submitted" >
+        <form name="form" class="margin-base-vertical" autocomplete="off" novalidate submitted="submitted">
           <p class="input-group">
-                  <div class="form-group" ng-class="{'has-error': form.email.$invalid && submitted}">
+                  <div class="form-group" >
 						<input
-						type="email"
+						type="text"
 						class="form-control"
-						id="email"
-						name="email"
-						placeholder="Email"
-						ng-model="email"
+						id="nick"
+						name="nicke"
+						placeholder="nick"
+						ng-model="user.username"
 						ng-model-options="{updateOn: 'blur'}"
+            required
 						>
                   </div>
-                  <div class="form-group" ng-class="{'has-error': form.email.$invalid && submitted}">
+                  <div class="form-group">
 						<input                
 						type="password"
 						class="form-control"
 						id="password"
 						name="password"
 						placeholder="Password"
-						ng-model="password"
+						ng-model="user.password"
+            ng-model-options="{updateOn: 'blur'}"
+            required
 						>
                   </div>                  
           </p>
           <p class="help-block text-center">
             <small>
-              <a href="#" data-toggle="modal" data-target="#loginModal">Cadastre-se</a>
-              <a href="#" data-toggle="modal" data-target="#rememberModal">Esqueceu a senha?</a>
+              <a href="" ng-click="launchUserDialog()" >Cadastre-se</a>
+              <a href="#" >Esqueceu a senha?</a>
             </small></p>
           <p class="text-center">
-            <button type="submit" class="btn btn-success btn-lg" ng-click="submit()">entrar</button>
+            <button type="submit" class="btn btn-success btn-lg" ng-disabled="form.$invalid" ng-click="submit()">entrar</button>
           </p>
           </span>
         </form>
@@ -118,45 +121,43 @@
     </div><!-- //row -->
   </div> <!-- //container -->
 
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-controller="LoginCtrl">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">Cadastre-se</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" role="form">
-
-        <!-- Text input-->
-        <div class="form-group">
-          <label for="exampleInputEmail1">nick</label>
-          <input type="text" class="form-control" id="txtNick" placeholder="nick"  ng-model="user.username">
-          <p class="help-block">será utilizado como seu login</p>
+<script type="text/ng-template" id="user-dialog.html">
+        <div class="modal-header">
+            <h4 class="modal-title" >Cadastre-se</h4>
         </div>
-        <!-- Text input-->
-        <div class="form-group">
-          <label for="exampleInputEmail1">email</label>
-          <input type="email" class="form-control" id="txtEmail" placeholder="email" ng-model="user.email">
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" name="userForm" novalidate>
+
+            <!-- Text input-->
+            <div class="form-group" ng-class="{error: userForm.nick.$invalid}">
+              <label for="exampleInputEmail1">nick</label>
+              <input type="text" class="form-control"  placeholder="nick"  name="nick" ng-model="user.username" required>
+              <p class="help-block" ng-show="userForm.nick.$error.required">Campo obrigatório</p>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+              <label for="exampleInputEmail1">email</label>
+              <input type="email" class="form-control"  placeholder="email" ng-model="user.email" name="email" required>
+              <p class="help-block" ng-show="userForm.email.$error.required">Campo obrigatório</p>
+              <p class="help-block" ng-show="userForm.email.$error.email">Informe um e-mail valido</p>
+            </div>
+
+            <!-- Password input-->
+            <div class="form-group">
+              <label for="exampleInputEmail1">password</label>
+              <input type="password" class="form-control" placeholder="password" ng-model="user.password" name="password" required>
+              <p class="help-block" ng-show="userForm.password.$error.required">Campo obrigatório</p>
+            </div>
+
+            </form>
         </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="save()"  ng-disabled="userForm.$invalid">OK</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>   
+</script>
 
-        <!-- Password input-->
-        <div class="form-group">
-          <label for="exampleInputEmail1">password</label>
-          <input type="password" class="form-control" id="txtPassword" placeholder="password" ng-model="user.password">
-        </div>
-
-        </form>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">cancelar</button>
-        <button type="button" class="btn btn-primary" ng-click="save()">salvar</button>
-      </div>
-    </div>
-  </div>
-</div>  
-
+<script type="text/ng-template" id="remember.html">
 <div class="modal fade" id="rememberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -184,11 +185,11 @@
     </div>
   </div>
 </div>  
+</script>
 
 <script src="js/angular.js"></script>
 <script src="js/angular-animate.js"></script>
-<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
-<script src="http://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
+<script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
 <script src="js/login-app.js"></script>
 
 </body>
