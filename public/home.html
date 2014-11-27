@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <title>Bootstrap In Practice - Landing Page Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" />
+
+  <link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript">
+    $('#loginModal').modal({
+      backdrop: 'static'
+    });
+
+    $('#rememberModal').modal({
+      backdrop: 'static'
+    });    
+  </script>
+
+  <style>
+
+    /* http://css-tricks.com/perfect-full-page-background-image/ */
+    html {
+      background: url(img/background.jpg) no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    body {
+      padding-top: 20px;
+      font-size: 16px;
+      font-family: "Open Sans",serif;
+      background: transparent;
+    }
+
+    h1 {
+      font-family: "Abel", Arial, sans-serif;
+      font-weight: 400;
+      font-size: 40px;
+    }
+
+    /* Override B3 .panel adding a subtly transparent background */
+    .panel {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .margin-base-vertical {
+      margin: 40px 0;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+    <div class="row" ng-controller="FormCtrl">
+      <div class="col-md-6 col-md-offset-3 panel panel-default">
+
+        <h1 class="margin-base-vertical">Have you ever seen the rain?</h1>
+
+        <p>
+          Someone told me long ago there's a calm before the storm. I know, It's been comin for some time.
+        </p>
+        <p>
+          When it's over, so they say, it'll rain a sunny day. I know,  Shinin down like water.
+        </p>
+
+        <p>
+          I want to know, have you ever seen the rain?
+        </p>
+
+        <form name="form" class="margin-base-vertical" autocomplete="off" novalidate submitted="submitted" >
+          <p class="input-group">
+                  <div class="form-group" ng-class="{'has-error': form.email.$invalid && submitted}">
+						<input
+						type="email"
+						class="form-control"
+						id="email"
+						name="email"
+						placeholder="Email"
+						ng-model="email"
+						ng-model-options="{updateOn: 'blur'}"
+						>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error': form.email.$invalid && submitted}">
+						<input                
+						type="password"
+						class="form-control"
+						id="password"
+						name="password"
+						placeholder="Password"
+						ng-model="password"
+						>
+                  </div>                  
+          </p>
+          <p class="help-block text-center">
+            <small>
+              <a href="#" data-toggle="modal" data-target="#loginModal">Cadastre-se</a>
+              <a href="#" data-toggle="modal" data-target="#rememberModal">Esqueceu a senha?</a>
+            </small></p>
+          <p class="text-center">
+            <button type="submit" class="btn btn-success btn-lg" ng-click="submit()">entrar</button>
+          </p>
+          </span>
+        </form>
+
+        <div class="margin-base-vertical">
+          <small class="text-muted"></small>
+        </div>
+
+      </div><!-- //main content -->
+    </div><!-- //row -->
+  </div> <!-- //container -->
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Cadastre-se</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label for="exampleInputEmail1">nick</label>
+          <input type="text" class="form-control" id="txtNick" placeholder="nick">
+          <p class="help-block">como você será visto...</p>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+          <label for="exampleInputEmail1">email</label>
+          <input type="email" class="form-control" id="txtEmail" placeholder="email">
+          <p class="help-block">será utilizado como seu login</p>
+        </div>
+
+        <!-- Password input-->
+        <div class="form-group">
+          <label for="exampleInputEmail1">nick</label>
+          <input type="password" class="form-control" id="txtPassword" placeholder="password">
+        </div>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">cancelar</button>
+        <button type="button" class="btn btn-primary">salvar</button>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<div class="modal fade" id="rememberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Informe seu email</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label for="exampleInputEmail1">email</label>
+          <input type="email" class="form-control" id="txtEmail" placeholder="email">
+        </div>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">cancelar</button>
+        <button type="button" class="btn btn-primary">enviar</button>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<script src="js/angular.js"></script>
+<script src="js/angular-animate.js"></script>
+<script src="js/login-app.js"></script>
+
+</body>
+</html>
