@@ -15,6 +15,7 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
         .state('index', {
             url: '/',
+            controller: DashBoardCtrl,
             templateUrl: 'dashboard.html'
         })
         .state('tables', {
@@ -89,6 +90,10 @@ function MasterCtrl($scope, $cookieStore) {
     };
 
     window.onresize = function() { $scope.$apply(); };
+}
+
+function DashBoardCtrl($scope, $cookieStore) {
+
 }
 
 /**

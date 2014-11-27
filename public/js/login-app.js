@@ -1,6 +1,6 @@
-angular.module('app', ['ngAnimate','ui.bootstrap']);
+angular.module('app', ['ngAnimate','ui.bootstrap', 'ngCookies']);
 
-var FormCtrl = function($scope, $animate, $modal, $window, $http) {
+var FormCtrl = function($scope, $animate, $modal, $window, $http, $cookieStore) {
 
   // hide error messages until 'submit' event
   $scope.submitted = false;
@@ -13,24 +13,21 @@ var FormCtrl = function($scope, $animate, $modal, $window, $http) {
     $http.post('/api/authenticate', $scope.user)
       .success(function(data) {
         
+        $window.location.href= '/home' ;
+
+        $cookieStore.put('user', data);
+        
+      })
+      .error(function(data) {
         var dialog = $modal.open({
           templateUrl: 'partial/dialog.html',
           controller: DialogCtrl,
           resolve: {
             message: function () {
-              return 'Bem vindo! Você foi cadastrado com sucesso!';
+              return 'Usuário e/ou senha invalido.';
             }
           }
-        });    
-
-        dialog.result.then(function () {
-          $modalInstance.close();
-        });    
-        
-        
-      })
-      .error(function(data) {
-        console.log('Error: ' + data);
+        });  
       });
 
     //$window.location.href = '/home';

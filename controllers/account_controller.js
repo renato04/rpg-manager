@@ -41,29 +41,12 @@ exports.create = function(req, res, next) {
   });
 };
 
-/**
- * Authenticate a request using basic HTTP authentication.
- * Internal method to be called on all routes requiring authentication.
- */
+exports.logon = function(req, res, next) {
 
-exports.authenticate = function(req, res, next) {
-  var realm = process.env.AUTH_REALM || 'API' 
-    , authorization = req.headers['authorization']
-    , token, decoded, parts, username, password;
+    var username = req.body.username;
+    var password = req.body.password;
 
-  if(!authorization) {
-    // No credentials sent.
-    res.setHeader('WWW-Authenticate', 'Basic realm="' + realm + '"');
-    return res.send(401);
-  }
-
-  token = authorization.split(' ')[1];
-  decoded = new Buffer(token, 'base64').toString();
-  parts = decoded.split(':');
-  username = parts[0];
-  password = parts[1];
-
-  Account.authenticate(username, password, function(err, account) {
+    Account.authenticate(username, password, function(err, account) {
     if(err) {
       // Mongoose error.
       return next(err);
@@ -77,7 +60,47 @@ exports.authenticate = function(req, res, next) {
     // Authentic, attach account._id for the next handler to access.
     req.account_id = account._id;
 
-    // We're done here.
-    next();
+    // Created successfully.
+    res.send(JSON.stringify(account));
   });
+}
+/**
+ * Authenticate a request using basic HTTP authentication.
+ * Internal method to be called on all routes requiring authentication.
+ */
+
+exports.authenticate = function(req, res, next) {
+  // var realm = process.env.AUTH_REALM || 'API' 
+  //   , authorization = req.headers['authorization']
+  //   , token, decoded, parts, username, password;
+
+  // if(!authorization) {
+  //   // No credentials sent.
+  //   res.setHeader('WWW-Authenticate', 'Basic realm="' + realm + '"');
+  //   return res.send(401);
+  // }
+
+  // token = authorization.split(' ')[1];
+  // decoded = new Buffer(token, 'base64').toString();
+  // parts = decoded.split(':');
+  // username = parts[0];
+  // password = parts[1];
+
+  // Account.authenticate(username, password, function(err, account) {
+  //   if(err) {
+  //     // Mongoose error.
+  //     return next(err);
+  //   }
+
+  //   if(!account) {
+  //     // Bad username or password.
+  //     return res.send(401);
+  //   }
+
+  //   // Authentic, attach account._id for the next handler to access.
+  //   req.account_id = account._id;
+
+  //   // We're done here.
+  //   next();
+  // });
 };
