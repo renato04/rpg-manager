@@ -23,7 +23,7 @@ body {
 
 #page-wrapper {
     width: 100%;
-    padding: 0;
+    padding: 5%;
     background-color: #fff;
 }
 
@@ -33,9 +33,9 @@ body {
 }
 
 @media(min-width:768px) {
-    #wrapper {
+/*    #wrapper {
         padding-left: 225px;
-    }
+    }*/
 
     #page-wrapper {
         padding: 10px;
