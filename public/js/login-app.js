@@ -1,4 +1,4 @@
-angular.module('app', ['ngAnimate'])
+angular.module('app', ['ngAnimate','ui.bootstrap','dialogs'])
 
 .controller('FormCtrl', ['$scope', '$animate', '$window', function($scope, $animate, $window) {
 
@@ -14,9 +14,26 @@ angular.module('app', ['ngAnimate'])
     $scope.showMessage = true;
     $window.location.href = '/home';
   };
+  
 
 }])
+.controller('LoginCtrl', ['$scope', '$http', '$dialogs', '$window', function($scope, $http, $dialogs, $window) {
 
+  $scope.user = {};
+
+  $scope.save = function()
+  {
+
+    $http.post('/api/account', $scope.user)
+      .success(function(data) {
+        alert('Salvo com sucesso!');
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  };
+
+}])
 .directive('shakeThat', ['$animate', function($animate) {
 
   return {
