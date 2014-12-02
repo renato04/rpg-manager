@@ -8,7 +8,8 @@ var bodyParser = require('body-parser'); 	// pull information from HTML POST (ex
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var port = 8080											//port that will be listen
 
-account_controller = require('./controllers/account_controller.js')
+var account_controller = require('./controllers/account_controller.js');
+var aventura_controller = require('./controllers/aventura_controller.js');
 
 
 
@@ -34,6 +35,8 @@ app.use(methodOverride());
 
 app.post('/api/account', account_controller.create);
 app.post('/api/authenticate', account_controller.logon);
+app.post('/api/aventura', aventura_controller.create);
+app.get('/api/aventuras/:usuario', aventura_controller.listarPorUsuario);
 
 
 app.get('/home', function(req, res) {

@@ -57,9 +57,6 @@ exports.logon = function(req, res, next) {
       return res.send(401);
     }
 
-    // Authentic, attach account._id for the next handler to access.
-    req.account_id = account._id;
-
     // Created successfully.
     res.send(JSON.stringify(account));
   });

@@ -27,7 +27,8 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'partial/ficha.html'
         })
         .state('aventuras', {
-            url: '/aventuras', 
+            url: '/aventuras',
+            controller: AventuraCtrl, 
             templateUrl: 'partial/aventuras.html'
         })
         .state('aventura', {
@@ -52,6 +53,8 @@ angular.module('Dashboard')
     .controller('MasterCtrl', ['$scope', '$cookieStore', MasterCtrl]);
 
 function MasterCtrl($scope, $cookieStore) {
+    
+    $scope.user = $cookieStore.get('user');
     /**
      * Sidebar Toggle & Cookie Control
      *
@@ -98,16 +101,42 @@ function MasterCtrl($scope, $cookieStore) {
 }
 
 var DashBoardCtrl = function($scope, $cookieStore) {
-
 };
 
-var AventuraCtrl  = function ($scope, $modal, AventuraService){
+var AventuraCtrl  = function ($scope, $modal, $cookieStore, AventuraService){
 
     $scope.aventura = {};
+    $scope.aventuras = {};
+
+    var carregar = function(){
+
+        AventuraService.todas($cookieStore.get('user')._id, function(err, response){
+            if (!err) {
+                $scope.aventuras = response;
+            }
+            else{
+                var dialog = $modal.open({
+                  templateUrl: 'partial/dialog.html',
+                  controller: DialogCtrl,
+                  resolve: {
+                    message: function () {
+                      return 'Falha ao listas aventuras!';
+                    },
+                    title: function(){
+                        return 'Atenção!';
+                    }
+                  }
+                }); 
+            }
+        })
+    };
+
+    carregar();
 
     $scope.salvar = function(){
+        $scope.aventura.usuario = $cookieStore.get('user')._id;
         AventuraService.salvar($scope.aventura, function(err, response){
-            if (err) {
+            if (!err) {
                 var dialog = $modal.open({
                   templateUrl: 'partial/dialog.html',
                   controller: DialogCtrl,
@@ -185,20 +214,31 @@ function rdLoading () {
 /**
 *Serices
 */
-angular.module('Dashboard').factory("AventuraService", ["$http", "$rootScope", aventuraService]);
+angular.module('Dashboard').factory("AventuraService", ["$http", aventuraService]);
 
-function aventuraService($http, $rootScope){
+function aventuraService($http){
     return{
         salvar:  function(aventura, callback) {
             $http.post('/api/aventura', aventura)
             .success(function(response) {
                 console.log("aventura adicionada com sucesso!");
-                $rootScope.$apply(function() { callback(null, response); });
+                callback(null, response);
             })
             .error(function(response) {
                 console.log("error adding aventura!");
                 callback("Cannot submit data!");
             });
+        },
+
+        todas: function(usuario, callback){
+            $http.get('/api/aventuras/' + usuario)
+            .success(function(response) {
+                callback(null, response);
+            })
+            .error(function(response) {
+                console.log("error adding aventura!");
+                callback("Cannot get data!");
+            });            
         }
     };
 };
