@@ -168,38 +168,56 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, AventuraService){
     };
 
     $scope.apagar = function(aventura){
-        $scope.aventura.usuario = $cookieStore.get('user')._id;
-        AventuraService.salvar($scope.aventura, function(err, response){
-            if (!err) {
-                var dialog = $modal.open({
-                  templateUrl: 'partial/dialog.html',
-                  controller: DialogCtrl,
-                  resolve: {
-                    message: function () {
-                      return 'Aventura salva!';
-                    },
-                    title: function(){
-                        return 'Atenção!';
-                    }                    
-                  }
-                });    
-            }
-            else{
-                var dialog = $modal.open({
-                  templateUrl: 'partial/dialog.html',
-                  controller: DialogCtrl,
-                  resolve: {
-                    message: function () {
-                      return 'Falha ao salvar aventura!';
-                    },
-                    title: function(){
-                        return 'Atenção!';
-                    }
-                  }
-                }); 
-            }
+        var dialog = $modal.open({
+          templateUrl: 'partial/confirm-dialog.html',
+          controller: DialogCtrl,
+          resolve: {
+            message: function () {
+              return 'Deseja realmente apagar essa aventura, todas fichas relacionadas a ela serão apagadas.';
+            },
+            title: function(){
+                return 'Atenção!';
+            }                    
+          }
         });
-    };    
+
+        dialog.result.then(function (result) {
+            if (result) {
+                AventuraService.apagar(aventura._id, function(err, response){
+                    if (!err) {
+                        var dialog = $modal.open({
+                          templateUrl: 'partial/dialog.html',
+                          controller: DialogCtrl,
+                          resolve: {
+                            message: function () {
+                              return 'Aventura apagada!';
+                            },
+                            title: function(){
+                                return 'Atenção!';
+                            }                    
+                          }
+                        });    
+
+                        carregar();
+                    }
+                    else{
+                        var dialog = $modal.open({
+                          templateUrl: 'partial/dialog.html',
+                          controller: DialogCtrl,
+                          resolve: {
+                            message: function () {
+                              return 'Falha ao apagar aventura!';
+                            },
+                            title: function(){
+                                return 'Atenção!';
+                            }
+                          }
+                        }); 
+                    }
+                });
+            }
+        });                       
+    };
 };
 
 var DialogCtrl = function($scope, $modalInstance, message, title){
@@ -207,7 +225,7 @@ var DialogCtrl = function($scope, $modalInstance, message, title){
    $scope.title = title;
 
   $scope.ok = function () {
-    $modalInstance.close();
+    $modalInstance.close('ok');
   };  
 };
 
@@ -273,7 +291,7 @@ function aventuraService($http){
                 console.log("error adding aventura!");
                 callback("Cannot get data!");
             });            
-        }
+        },
 
         apagar: function(id, callback){
             $http.post('/api/aventura/' + id)

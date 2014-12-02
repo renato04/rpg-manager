@@ -53,3 +53,17 @@ exports.listarPorUsuario = function(req, res, next) {
   });
 }
 
+exports.apagar = function(req, res, next) {
+
+  Aventura.findOne({_id: req.params.id}).remove( function(err, result) {
+    if(err) {
+      // Mongoose error.
+      return next(err);
+    }
+
+    // Created successfully.
+    res.send(200);
+  });
+}
+
+
