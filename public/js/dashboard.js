@@ -36,8 +36,9 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             controller: AventuraCtrl,
             templateUrl: 'partial/aventura.html'
         })        
-        .state('personagem', {
-            url: '/personagem', 
+        .state('criar.personagem', {
+            url: 'criar/personagem/:aventuraid', 
+            controller: PersonagemCtrl,
             templateUrl: 'partial/personagem.html'
         })
         .state('personagens', {
@@ -100,7 +101,8 @@ function MasterCtrl($scope, $cookieStore) {
     window.onresize = function() { $scope.$apply(); };
 }
 
-var DashBoardCtrl = function($scope, $cookieStore) {
+var PersonagemCtrl = function($scope, $stateParams) {
+    $scope.personagem = {};
 };
 
 var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, AventuraService){
@@ -331,6 +333,55 @@ function aventuraService($http){
 
         obter: function(id, callback){
             $http.get('/api/aventura/' + id)
+            .success(function(response) {
+                callback(null, response);
+            })
+            .error(function(response) {
+                callback("Cannot get data!");
+            });            
+        } 
+    };
+};
+
+angular.module('Dashboard').factory("PersonagemService", ["$http", personagemService]);
+
+function personagemService($http){
+    return{
+        salvar:  function(personagem, callback) {
+            $http.post('/api/personagem', personagem)
+            .success(function(response) {
+                console.log("personagem adicionada com sucesso!");
+                callback(null, response);
+            })
+            .error(function(response) {
+                console.log("error adding personagem!");
+                callback("Cannot submit data!");
+            });
+        },
+
+        todas: function(aventura, callback){
+            $http.get('/api/personagem/' + aventura)
+            .success(function(response) {
+                callback(null, response);
+            })
+            .error(function(response) {
+                console.log("error getting personagem!");
+                callback("Cannot get data!");
+            });            
+        },
+
+        apagar: function(id, callback){
+            $http.post('/api/personagem/' + id)
+            .success(function(response) {
+                callback(null, response);
+            })
+            .error(function(response) {
+                callback("Cannot post data!");
+            });            
+        },
+
+        obter: function(id, callback){
+            $http.get('/api/personagem/' + id)
             .success(function(response) {
                 callback(null, response);
             })
