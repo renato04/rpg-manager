@@ -32,6 +32,7 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
         })
         .state('aventura', {
             url: '/aventura', 
+            controller: AventuraCtrl,
             templateUrl: 'partial/aventura.html'
         })        
         .state('personagem', {
@@ -96,9 +97,56 @@ function MasterCtrl($scope, $cookieStore) {
     window.onresize = function() { $scope.$apply(); };
 }
 
-function DashBoardCtrl($scope, $cookieStore) {
+var DashBoardCtrl = function($scope, $cookieStore) {
 
-}
+};
+
+var AventuraCtrl  = function ($scope, $modal, AventuraService){
+
+    $scope.aventura = {};
+
+    $scope.salvar = function(){
+        AventuraService.salvar($scope.aventura, function(err, response){
+            if (err) {
+                var dialog = $modal.open({
+                  templateUrl: 'partial/dialog.html',
+                  controller: DialogCtrl,
+                  resolve: {
+                    message: function () {
+                      return 'Aventura salva!';
+                    },
+                    title: function(){
+                        return 'Atenção!';
+                    }                    
+                  }
+                });    
+            }
+            else{
+                var dialog = $modal.open({
+                  templateUrl: 'partial/dialog.html',
+                  controller: DialogCtrl,
+                  resolve: {
+                    message: function () {
+                      return 'Falha ao salvar aventura!';
+                    },
+                    title: function(){
+                        return 'Atenção!';
+                    }
+                  }
+                }); 
+            }
+        });
+    };
+};
+
+var DialogCtrl = function($scope, $modalInstance, message, title){
+   $scope.message = message;
+   $scope.title = title;
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };  
+};
 
 /**
  * Alerts Controller
@@ -119,6 +167,7 @@ function AlertsCtrl($scope) {
         $scope.alerts.splice(index, 1);
     };
 }
+
 /**
  * Loading Directive
  * @see http://tobiasahlin.com/spinkit/
@@ -131,5 +180,26 @@ function rdLoading () {
         template: '<div class="loading"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>'
     };
     return directive;
+};
+
+/**
+*Serices
+*/
+angular.module('Dashboard').factory("AventuraService", ["$http", "$rootScope", aventuraService]);
+
+function aventuraService($http, $rootScope){
+    return{
+        salvar:  function(aventura, callback) {
+            $http.post('/api/aventura', aventura)
+            .success(function(response) {
+                console.log("aventura adicionada com sucesso!");
+                $rootScope.$apply(function() { callback(null, response); });
+            })
+            .error(function(response) {
+                console.log("error adding aventura!");
+                callback("Cannot submit data!");
+            });
+        }
+    };
 };
 })();

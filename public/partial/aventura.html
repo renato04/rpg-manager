@@ -7,17 +7,6 @@
                             Cadastro de Aventura
                             <small></small>
                         </h1>
-                        <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-dashboard"></i>  <a href="/">Dashboard</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-desktop"></i> <a href="#/personagens">Aventuras</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-desktop"></i> Cadastro de Aventura
-                            </li>                            
-                        </ol>
                     </div>
     <div class="row">
       <div class="col-lg-12">
@@ -26,12 +15,17 @@
             <i class="fa fa-users"></i> Informações Gerais
           </div>
           <div class="panel-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Nome</label>
-                    <input type="text" class="form-control"  placeholder="Nome">
-                  </div>
-            <label for="resumoAventura">Resumo</label>
-            <textarea class="form-control" id="resumoAventura" rows="5"></textarea>
+            <form name="aventuraForm">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Nome</label>
+                <input type="text" class="form-control"  placeholder="Nome" ng-model="aventura.nome" required>
+              </div>
+              <label for="resumoAventura">Resumo</label>
+              <textarea class="form-control" id="resumoAventura" rows="5" ng-model="aventura.resumo"></textarea>
+              <div class="text-right clearfix">
+                  <button type="button" class="btn btn-primary" style="margin-top:1%" ng-disabled="aventuraForm.$invalid" ng-click="salvar()">salvar</button>
+              </div>
+            </div>          
           </div>
         </div>
       </div> 
@@ -361,5 +355,6 @@
           </div>
         </div>
       </div> 
+
     </div>  
 </div>
