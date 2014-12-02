@@ -221,3 +221,4 @@ ul.alert-dropdown {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

@@ -32,8 +32,10 @@
                             </div>
                             <div class="panel-body">
                                 <div class="list-group">
-                                    <a href="#" class="list-group-item" ng-repeat="item in aventuras | filter:{nome: q}">{{item.nome}}</a>
-                                </div>
+                                  <a href="#" class="list-group-item" ng-repeat="item in aventuras | filter:{nome: q}">{{item.nome}}
+                                    <span class="pull-right"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></span>
+                                  </a>
+                                </div> 
                             </div>
                         </div>
                     </div>   

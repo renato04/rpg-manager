@@ -15,8 +15,8 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
         .state('index', {
             url: '/',
-            controller: DashBoardCtrl,
-            templateUrl: 'partial/dashboard.html'
+            controller: AventuraCtrl,
+            templateUrl: 'partial/aventuras.html'
         })
         .state('tables', {
             url: '/tables', 
@@ -166,6 +166,40 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, AventuraService){
             }
         });
     };
+
+    $scope.apagar = function(aventura){
+        $scope.aventura.usuario = $cookieStore.get('user')._id;
+        AventuraService.salvar($scope.aventura, function(err, response){
+            if (!err) {
+                var dialog = $modal.open({
+                  templateUrl: 'partial/dialog.html',
+                  controller: DialogCtrl,
+                  resolve: {
+                    message: function () {
+                      return 'Aventura salva!';
+                    },
+                    title: function(){
+                        return 'Atenção!';
+                    }                    
+                  }
+                });    
+            }
+            else{
+                var dialog = $modal.open({
+                  templateUrl: 'partial/dialog.html',
+                  controller: DialogCtrl,
+                  resolve: {
+                    message: function () {
+                      return 'Falha ao salvar aventura!';
+                    },
+                    title: function(){
+                        return 'Atenção!';
+                    }
+                  }
+                }); 
+            }
+        });
+    };    
 };
 
 var DialogCtrl = function($scope, $modalInstance, message, title){
@@ -240,6 +274,16 @@ function aventuraService($http){
                 callback("Cannot get data!");
             });            
         }
+
+        apagar: function(id, callback){
+            $http.post('/api/aventura/' + id)
+            .success(function(response) {
+                callback(null, response);
+            })
+            .error(function(response) {
+                callback("Cannot post data!");
+            });            
+        }        
     };
 };
 })();
