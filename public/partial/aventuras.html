@@ -7,14 +7,6 @@
                 Aventuras
                 <small></small>
             </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-dashboard"></i>  <a href="/">Dashboard</a>
-                </li>
-                <li class="active">
-                    <i class="fa fa-desktop"></i> Aventuras
-                </li>
-            </ol>
         </div>
     </div>
       <div class="form-group input-group">
@@ -32,7 +24,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                      <a class="list-group-item" ng-repeat="item in aventuras | filter:{nome: q}">{{item.nome}}
+                      <a href="#/aventura/{{item._id}}" class="list-group-item" ng-repeat="item in aventuras | filter:{nome: q}">{{item.nome}}
                         <span class="pull-right"><button class="btn btn-danger btn-xs" ng-click="apagar(item)"><i class="fa fa-trash-o"></i></button></span>
                       </a>
                     </div> 

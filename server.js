@@ -37,6 +37,7 @@ app.post('/api/account', account_controller.create);
 app.post('/api/authenticate', account_controller.logon);
 app.post('/api/aventura', aventura_controller.create);
 app.post('/api/aventura/:id', aventura_controller.apagar);
+app.get('/api/aventura/:id', aventura_controller.obter);
 app.get('/api/aventuras/:usuario', aventura_controller.listarPorUsuario);
 
 

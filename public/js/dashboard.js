@@ -32,7 +32,7 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'partial/aventuras.html'
         })
         .state('aventura', {
-            url: '/aventura', 
+            url: '/aventura/:id', 
             controller: AventuraCtrl,
             templateUrl: 'partial/aventura.html'
         })        
@@ -103,16 +103,15 @@ function MasterCtrl($scope, $cookieStore) {
 var DashBoardCtrl = function($scope, $cookieStore) {
 };
 
-var AventuraCtrl  = function ($scope, $modal, $cookieStore, AventuraService){
+var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, AventuraService){
 
     $scope.aventura = {};
     $scope.aventuras = {};
 
-    var carregar = function(){
-
-        AventuraService.todas($cookieStore.get('user')._id, function(err, response){
+    if ($stateParams.id) {
+        AventuraService.obter($stateParams.id, function(err, response){
             if (!err) {
-                $scope.aventuras = response;
+                $scope.aventura = response;
             }
             else{
                 var dialog = $modal.open({
@@ -120,7 +119,7 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, AventuraService){
                   controller: DialogCtrl,
                   resolve: {
                     message: function () {
-                      return 'Falha ao listas aventuras!';
+                      return 'Falha ao carregar aventura!';
                     },
                     title: function(){
                         return 'Atenção!';
@@ -128,10 +127,37 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, AventuraService){
                   }
                 }); 
             }
-        })
-    };
+        });
+    }
+    else{
 
-    carregar();
+        var carregar = function(){
+
+            AventuraService.todas($cookieStore.get('user')._id, function(err, response){
+                if (!err) {
+                    $scope.aventuras = response;
+                }
+                else{
+                    var dialog = $modal.open({
+                      templateUrl: 'partial/dialog.html',
+                      controller: DialogCtrl,
+                      resolve: {
+                        message: function () {
+                          return 'Falha ao listas aventuras!';
+                        },
+                        title: function(){
+                            return 'Atenção!';
+                        }
+                      }
+                    }); 
+                }
+            })
+        };
+
+        carregar();        
+    }
+
+
 
     $scope.salvar = function(){
         $scope.aventura.usuario = $cookieStore.get('user')._id;
@@ -301,7 +327,17 @@ function aventuraService($http){
             .error(function(response) {
                 callback("Cannot post data!");
             });            
-        }        
+        },
+
+        obter: function(id, callback){
+            $http.get('/api/aventura/' + id)
+            .success(function(response) {
+                callback(null, response);
+            })
+            .error(function(response) {
+                callback("Cannot get data!");
+            });            
+        } 
     };
 };
 })();
