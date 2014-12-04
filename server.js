@@ -10,6 +10,7 @@ var port = 8080											//port that will be listen
 
 var account_controller = require('./controllers/account_controller.js');
 var aventura_controller = require('./controllers/aventura_controller.js');
+var personagem_controller = require('./controllers/personagem_controller.js');
 
 
 
@@ -35,10 +36,16 @@ app.use(methodOverride());
 
 app.post('/api/account', account_controller.create);
 app.post('/api/authenticate', account_controller.logon);
+
 app.post('/api/aventura', aventura_controller.create);
 app.post('/api/aventura/:id', aventura_controller.apagar);
 app.get('/api/aventura/:id', aventura_controller.obter);
 app.get('/api/aventuras/:usuario', aventura_controller.listarPorUsuario);
+
+app.post('/api/personagem', personagem_controller.create);
+app.post('/api/personagem/:id', personagem_controller.apagar);
+app.get('/api/personagem/:id', personagem_controller.obter);
+app.get('/api/personagem/:aventura', personagem_controller.listarPorAventura);
 
 
 app.get('/home', function(req, res) {

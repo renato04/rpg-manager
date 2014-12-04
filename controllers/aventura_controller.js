@@ -45,7 +45,7 @@ exports.create = function(req, res, next) {
       }
 
       // Created successfully.
-      res.send(201);
+      res.send(JSON.stringify(aventura));
     });
   }  
 };

@@ -31,13 +31,18 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             controller: AventuraCtrl, 
             templateUrl: 'partial/aventuras.html'
         })
-        .state('aventura', {
-            url: '/aventura/:id', 
+        .state('editar;aventura', {
+            url: '/editar/aventura/:id', 
             controller: AventuraCtrl,
             templateUrl: 'partial/aventura.html'
-        })        
-        .state('criar.personagem', {
-            url: 'criar/personagem/:aventuraid', 
+        })  
+        .state('criar;aventura', {
+            url: '/criar/aventura', 
+            controller: AventuraCtrl,
+            templateUrl: 'partial/aventura.html'
+        })                
+        .state('personagem', {
+            url: '/personagem', 
             controller: PersonagemCtrl,
             templateUrl: 'partial/personagem.html'
         })
@@ -101,18 +106,56 @@ function MasterCtrl($scope, $cookieStore) {
     window.onresize = function() { $scope.$apply(); };
 }
 
-var PersonagemCtrl = function($scope, $stateParams) {
+var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, PersonagemService) {
     $scope.personagem = {};
+
+
+    $scope.salvar = function(){
+        $scope.personagem.aventura = $cookieStore.get('aventura');
+        PersonagemService.salvar($scope.personagem, function(err, personagem){
+            if (!err) {
+                var dialog = $modal.open({
+                  templateUrl: 'partial/dialog.html',
+                  controller: DialogCtrl,
+                  resolve: {
+                    message: function () {
+                      return 'Personagem Salvo!';
+                    },
+                    title: function(){
+                        return 'Atenção!';
+                    }                    
+                  }
+                });    
+            }
+            else{
+                var dialog = $modal.open({
+                  templateUrl: 'partial/dialog.html',
+                  controller: DialogCtrl,
+                  resolve: {
+                    message: function () {
+                      return 'Falha ao salvar Personagem!';
+                    },
+                    title: function(){
+                        return 'Atenção!';
+                    }
+                  }
+                }); 
+            }
+        });
+    };
+
 };
 
 var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, AventuraService){
 
     $scope.aventura = {};
     $scope.aventuras = {};
+    $cookieStore.remove('aventura');
 
     if ($stateParams.id) {
         AventuraService.obter($stateParams.id, function(err, response){
             if (!err) {
+                $cookieStore.put('aventura', $stateParams.id);
                 $scope.aventura = response;
             }
             else{
@@ -163,8 +206,9 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, Aventu
 
     $scope.salvar = function(){
         $scope.aventura.usuario = $cookieStore.get('user')._id;
-        AventuraService.salvar($scope.aventura, function(err, response){
+        AventuraService.salvar($scope.aventura, function(err, aventura){
             if (!err) {
+                $cookieStore.put('aventura', aventura._id);
                 var dialog = $modal.open({
                   templateUrl: 'partial/dialog.html',
                   controller: DialogCtrl,
@@ -193,6 +237,17 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, Aventu
                 }); 
             }
         });
+    };
+
+    $scope.permiteAdicionarPersonagem = function(){
+        var aventuraID = $scope.aventura.usuario = $cookieStore.get('aventura');
+
+        if (aventuraID) {
+            return true;
+        }
+        else{
+            return false;
+        }
     };
 
     $scope.apagar = function(aventura){
@@ -360,7 +415,7 @@ function personagemService($http){
         },
 
         todas: function(aventura, callback){
-            $http.get('/api/personagem/' + aventura)
+            $http.get('/api/personagem/aventura' + aventura)
             .success(function(response) {
                 callback(null, response);
             })
@@ -391,4 +446,25 @@ function personagemService($http){
         } 
     };
 };
+
+
+//Diretivas
+angular.directive("onlyDigits", function() {
+  return {
+    restrict: "A",
+    require: "?ngModel",
+    link: function(scope, element, attrs, ngModel) {
+      if (!ngModel) {
+        return;
+      }
+      return ngModel.$parsers.unshift(function(inputValue) {
+        var digits;
+        digits = inputValue.replace(/\D/g, "");
+        ngModel.$viewValue = digits;
+        ngModel.$render();
+        return digits;
+      });
+    }
+  };
+});
 })();

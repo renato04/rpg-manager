@@ -19,12 +19,12 @@
                 <div class="panel-heading clearfix">
                     <h3 class="panel-title pull-left">Aventuras</h3>
                     <div class="btn-group pull-right">
-                        <a href="#/aventura" class="btn btn-default btn-sm"><i class="fa fa-plus"></i></a>
+                        <a href="#/criar/aventura" class="btn btn-default btn-sm"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                      <a href="#/aventura/{{item._id}}" class="list-group-item" ng-repeat="item in aventuras | filter:{nome: q}">{{item.nome}}
+                      <a href="#/editar/aventura/{{item._id}}" class="list-group-item" ng-repeat="item in aventuras | filter:{nome: q}">{{item.nome}}
                         <span class="pull-right"><button class="btn btn-danger btn-xs" ng-click="apagar(item)"><i class="fa fa-trash-o"></i></button></span>
                       </a>
                     </div> 
