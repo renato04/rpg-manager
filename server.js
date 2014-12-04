@@ -6,6 +6,7 @@ var mongoose = require('mongoose'); 					// mongoose for mongodb
 var morgan = require('morgan'); 			// log requests to the console (express4)
 var bodyParser = require('body-parser'); 	// pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+var multer  = require('multer')
 var port = 8080											//port that will be listen
 
 var account_controller = require('./controllers/account_controller.js');
@@ -17,14 +18,14 @@ var personagem_controller = require('./controllers/personagem_controller.js');
 app.set('port', (process.env.PORT || port));
 
 var connStr = 'mongodb://rramosna:rramosna@ds052837.mongolab.com:52837/rpg';
-mongoose.connect(connStr, function(err) {
-    if (err)
-    {
-    	console.log('Error on connect to MongoDB' + err.toString());
-    	throw err;	
-    } 
-    console.log('Successfully connected to MongoDB');
-});
+// mongoose.connect(connStr, function(err) {
+//     if (err)
+//     {
+//     	console.log('Error on connect to MongoDB' + err.toString());
+//     	throw err;	
+//     } 
+//     console.log('Successfully connected to MongoDB');
+// });
 
 
 app.use(express.static(__dirname + '/public')); 				// set the static files location /public/img will be /img for users
@@ -33,6 +34,7 @@ app.use(bodyParser.urlencoded({'extended':'true'})); 			// parse application/x-w
 app.use(bodyParser.json()); 									// parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
+app.use(multer({ dest: './uploads/'}))
 
 app.post('/api/account', account_controller.create);
 app.post('/api/authenticate', account_controller.logon);
@@ -52,9 +54,27 @@ app.get('/home', function(req, res) {
 		res.sendfile('./public/dashboard2.html'); // load the single view file 
 	});
 
+app.get('/photos/new', function(req, res){
+  res.send('<form method="post" enctype="multipart/form-data">'
+    + '<p>Data: <input type="filename" name="filename" enctype="multipart/form-data"/></p>'
+    + '<p>file: <input type="file" name="file" /></p>'
+    + '<p><input type="submit" value="Upload" /></p>'
+    + '</form>');
+});
+
+app.post('/photos/new', function(req, res) {
+
+console.log(req.body)
+console.log(req.files)
+});
+
+
+
 app.get('*', function(req, res) {
 		res.sendfile('./public/home.html'); // load the single view file 
 	});
+
+
 
 
 	

@@ -11,6 +11,9 @@ var Personagem = require('../models/personagem.js');
  */
 
 exports.create = function(req, res, next) {
+
+  console.log(req.body);
+  console.log(req.files);
   var personagem = new Personagem();
   
   personagem.nome = req.body.nome;

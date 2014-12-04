@@ -109,6 +109,15 @@ function MasterCtrl($scope, $cookieStore) {
 var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, PersonagemService) {
     $scope.personagem = {};
 
+    $scope.uploadPic = function(files) {
+        $scope.formUpload = true;
+        if (files != null) {
+            var file = files[0];
+            $scope.errorMsg = null;
+            eval($scope.uploadScript);  
+        }
+    }    
+
 
     $scope.salvar = function(){
         $scope.personagem.aventura = $cookieStore.get('aventura');
@@ -446,25 +455,4 @@ function personagemService($http){
         } 
     };
 };
-
-
-//Diretivas
-angular.directive("onlyDigits", function() {
-  return {
-    restrict: "A",
-    require: "?ngModel",
-    link: function(scope, element, attrs, ngModel) {
-      if (!ngModel) {
-        return;
-      }
-      return ngModel.$parsers.unshift(function(inputValue) {
-        var digits;
-        digits = inputValue.replace(/\D/g, "");
-        ngModel.$viewValue = digits;
-        ngModel.$render();
-        return digits;
-      });
-    }
-  };
-});
 })();
