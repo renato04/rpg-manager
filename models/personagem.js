@@ -23,12 +23,18 @@ var PersonagemSchema = new mongoose.Schema({
   vantagens: { type: String, required: false },
   desvantagens: { type: String, required: false },
   equipamento:{type: String, required:false},
-  background:{type: String, required:true},
+  background:{type: String, required:false},
+  codigo:{type: Number, required:false}
 });
 
 PersonagemSchema.statics.listarPorAventura = function(aventura, callback) {
   return this.find({ aventura: aventura }, callback);
 };
+
+PersonagemSchema.statics.obterPorCodigo = function(codigo, callback) {
+  return this.find({ codigo: codigo }, callback);
+};
+
 
 
 /*

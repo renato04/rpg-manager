@@ -104,7 +104,10 @@
           <p class="help-block text-center">
             <small>
               <a href="" ng-click="launchUserDialog()" >Cadastre-se</a>
+              |
               <a href="#" >Esqueceu a senha?</a>
+              |
+              <a href="" ng-click="launchCharDialog()">Participando de uma aventura?</a>
             </small></p>
           <p class="text-center">
             <button type="submit" class="btn btn-success btn-lg" ng-disabled="form.$invalid" ng-click="submit()">entrar</button>
@@ -184,6 +187,32 @@
     </div>
   </div>
 </div>  
+</script>
+
+<script type="text/ng-template" id="char.html">
+
+        <div class="modal-header">
+            <h4 class="modal-title" >Encontre seu personagem</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" role="form" name="form">
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label for="exampleInputEmail1">código do personagem</label>
+            <input type="text" class="form-control" id="txtEmail" placeholder="código do personagem" ng-model="personagem.codigo" required>
+          </div>
+
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">cancelar</button>
+          <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="entrar()">enviar</button>
+        </div>
+        </div>
+ 
 </script>
 
 <script src="js/angular.js"></script>

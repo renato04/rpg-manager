@@ -31,6 +31,7 @@ exports.create = function(req, res, next) {
   personagem.desvantagens = req.body.desvantagens;
   personagem.equipamento = req.body.equipamento;
   personagem.background = req.body.background;
+  personagem.codigo = req.body.codigo;
 
   if (req.body._id) {
     Personagem.findById(req.body._id, function (err, personagem) {
@@ -51,6 +52,7 @@ exports.create = function(req, res, next) {
       personagem.desvantagens = req.body.desvantagens;
       personagem.equipamento = req.body.equipamento;
       personagem.background = req.body.background;
+      personagem.codigo = req.body.codigo;
 
       personagem.save(function (err) {
         if (err) {
@@ -92,7 +94,24 @@ exports.listarPorAventura = function(req, res, next) {
       return next(err);
     }
 
+    res.send(personagems);
+  });
+}
+
+exports.obterPorCodigo = function(req, res, next) {
+
+  var personagem = new Personagem();
+  
+  personagem.codigo = req.params.codigo;
+
+  Personagem.obterPorCodigo(personagem.codigo, function(err, personagems) {
+    if(err) {
+      // Mongoose error.
+      return next(err);
+    }
+
     // Created successfully.
+
     res.send(personagems);
   });
 }
@@ -119,6 +138,7 @@ exports.obter = function(req, res, next) {
     }
 
     // Created successfully.
+    console.log(personagem);
     res.send(personagem);
   });
 }

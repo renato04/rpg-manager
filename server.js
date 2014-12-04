@@ -48,6 +48,7 @@ app.post('/api/personagem', personagem_controller.create);
 app.post('/api/personagem/:id', personagem_controller.apagar);
 app.get('/api/personagem/:id', personagem_controller.obter);
 app.get('/api/personagem/aventura/:aventura', personagem_controller.listarPorAventura);
+app.get('/api/personagem/codigo/:codigo', personagem_controller.obterPorCodigo);
 
 
 app.get('/home', function(req, res) {

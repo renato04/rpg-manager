@@ -42,12 +42,62 @@ var FormCtrl = function($scope, $animate, $modal, $window, $http, $cookieStore) 
           }
       }); 
   };
+
+  $scope.launchCharDialog = function(){
+    $modal.open({
+          templateUrl: 'char.html',
+          controller: CharCtrl,
+          resolve: {
+
+          }
+      }); 
+  };  
 };
 
-var DialogCtrl = function($scope, $modalInstance, message){
+var DialogCtrl = function($scope, $modalInstance, message, title){
+  $scope.title = title;
    $scope.message = message;
   $scope.ok = function () {
     $modalInstance.close();
+  };  
+};
+
+var CharCtrl = function($scope, $http, $modalInstance, $window, $modal) {
+
+  $scope.personagem = {};
+
+  $scope.entrar = function()
+  {
+
+    $http.get('/api/personagem/codigo/' + $scope.personagem.codigo, $scope.personagem)
+      .success(function(personagem) {
+        
+        $window.location.href= "/home#/editar/personagem/" + personagem[0]._id;
+        
+        
+      })
+      .error(function(data) {
+        var dialog = $modal.open({
+          templateUrl: 'partial/dialog.html',
+          controller: DialogCtrl,
+          resolve: {
+            message: function () {
+              return 'O código informado não corresponde a nenhum personagem!';
+            },
+            title: function(){
+                return 'Atenção!';
+            }                    
+          }
+        });      
+
+        dialog.result.then(function () {
+          $modalInstance.close();
+        });  
+      });
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
   };  
 };
 

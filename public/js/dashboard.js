@@ -141,20 +141,43 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
 
     $scope.salvar = function(){
         $scope.personagem.aventura = $cookieStore.get('aventura');
+
         PersonagemService.salvar($scope.personagem, function(err, personagem){
             if (!err) {
-                var dialog = $modal.open({
-                  templateUrl: 'partial/dialog.html',
-                  controller: DialogCtrl,
-                  resolve: {
-                    message: function () {
-                      return 'Personagem Salvo!';
-                    },
-                    title: function(){
-                        return 'Atenção!';
-                    }                    
-                  }
-                });    
+                personagem.codigo =   personagem._id.hashCode();  
+                $scope.personagem.codigo = personagem.codigo;
+                 PersonagemService.salvar(personagem, function(err, personagemComCOdigo){
+                    if (!err) {
+                        var dialog = $modal.open({
+                          templateUrl: 'partial/dialog.html',
+                          controller: DialogCtrl,
+                          resolve: {
+                            message: function () {
+                              return 'Personagem Salvo!';
+                            },
+                            title: function(){
+                                return 'Atenção!';
+                            }                    
+                          }
+                        });                          
+                    }
+                    else{
+                        var dialog = $modal.open({
+                          templateUrl: 'partial/dialog.html',
+                          controller: DialogCtrl,
+                          resolve: {
+                            message: function () {
+                              return 'Falha ao salvar Personagem!';
+                            },
+                            title: function(){
+                                return 'Atenção!';
+                            }
+                          }
+                        });                         
+
+                    }
+
+                 });            
             }
             else{
                 var dialog = $modal.open({
