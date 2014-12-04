@@ -27,6 +27,11 @@ exports.create = function(req, res, next) {
   personagem.magia = req.body.magia;    
   personagem.aventura = req.body.aventura;    
 
+  personagem.vantagens = req.body.vantagens;
+  personagem.desvantagens = req.body.desvantagens;
+  personagem.equipamento = req.body.equipamento;
+  personagem.background = req.body.background;
+
   if (req.body._id) {
     Personagem.findById(req.body._id, function (err, personagem) {
       if (err) return res.send(403);
@@ -40,9 +45,18 @@ exports.create = function(req, res, next) {
       personagem.poderDeFogo = req.body.poderDeFogo;
       personagem.vida = req.body.vida;
       personagem.magia = req.body.magia; 
-      personagem.aventura = req.body.aventura;   
+      personagem.aventura = req.body.aventura;  
+
+      personagem.vantagens = req.body.vantagens;
+      personagem.desvantagens = req.body.desvantagens;
+      personagem.equipamento = req.body.equipamento;
+      personagem.background = req.body.background;
+
       personagem.save(function (err) {
-        if (err) return res.send(403);
+        if (err) {
+          console.log(err);
+          return res.send(403);
+        }
         res.send(personagem);
       });
     });    
@@ -68,7 +82,7 @@ exports.create = function(req, res, next) {
 
 exports.listarPorAventura = function(req, res, next) {
 
-  var personagem = new personagem();
+  var personagem = new Personagem();
   
   personagem.aventura = req.params.aventura;
 

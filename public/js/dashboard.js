@@ -41,14 +41,15 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             controller: AventuraCtrl,
             templateUrl: 'partial/aventura.html'
         })                
+        .state('editarpersonagem', {
+            url: '/editar/personagem/:id', 
+            controller: PersonagemCtrl,
+            templateUrl: 'partial/personagem.html'
+        })
         .state('personagem', {
             url: '/personagem', 
             controller: PersonagemCtrl,
             templateUrl: 'partial/personagem.html'
-        })
-        .state('personagens', {
-            url: '/personagens', 
-            templateUrl: 'partial/personagens.html'
         })        ;
 }]);
 
@@ -106,18 +107,30 @@ function MasterCtrl($scope, $cookieStore) {
     window.onresize = function() { $scope.$apply(); };
 }
 
-var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, PersonagemService) {
+var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, PersonagemService) {
     $scope.personagem = {};
 
-    $scope.uploadPic = function(files) {
-        $scope.formUpload = true;
-        if (files != null) {
-            var file = files[0];
-            $scope.errorMsg = null;
-            eval($scope.uploadScript);  
-        }
+    if ($stateParams.id) {
+        PersonagemService.obter($stateParams.id, function(err, personagem){
+            if (!err) {
+                $scope.personagem = personagem;
+            }
+            else{
+                var dialog = $modal.open({
+                  templateUrl: 'partial/dialog.html',
+                  controller: DialogCtrl,
+                  resolve: {
+                    message: function () {
+                      return 'Falha ao carregar personagem!';
+                    },
+                    title: function(){
+                        return 'Atenção!';
+                    }
+                  }
+                }); 
+            }
+        });
     }    
-
 
     $scope.salvar = function(){
         $scope.personagem.aventura = $cookieStore.get('aventura');
@@ -153,12 +166,66 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, Person
         });
     };
 
+    $scope.apagar = function(){
+        var dialog = $modal.open({
+          templateUrl: 'partial/confirm-dialog.html',
+          controller: DialogCtrl,
+          resolve: {
+            message: function () {
+              return 'Deseja realmente apagar esse personagem?';
+            },
+            title: function(){
+                return 'Atenção!';
+            }                    
+          }
+        });
+
+        dialog.result.then(function (result) {
+            if (result) {
+                PersonagemService.apagar($scope.personagem._id, function(err, response){
+                    if (!err) {
+                        var dialog = $modal.open({
+                          templateUrl: 'partial/dialog.html',
+                          controller: DialogCtrl,
+                          resolve: {
+                            message: function () {
+                              return 'Personagem apagada!';
+                            },
+                            title: function(){
+                                return 'Atenção!';
+                            }                    
+                          }
+                        });    
+
+                        $window.location.href = '/home#/editar/aventura/' + $cookieStore.get('aventura');
+
+                    }
+                    else{
+                        var dialog = $modal.open({
+                          templateUrl: 'partial/dialog.html',
+                          controller: DialogCtrl,
+                          resolve: {
+                            message: function () {
+                              return 'Falha ao apagar aventura!';
+                            },
+                            title: function(){
+                                return 'Atenção!';
+                            }
+                          }
+                        }); 
+                    }
+                });
+            }
+        });                       
+    };    
+
 };
 
-var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, AventuraService){
+var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, AventuraService, PersonagemService){
 
     $scope.aventura = {};
     $scope.aventuras = {};
+    $scope.personagens = {};
     $cookieStore.remove('aventura');
 
     if ($stateParams.id) {
@@ -166,6 +233,7 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, Aventu
             if (!err) {
                 $cookieStore.put('aventura', $stateParams.id);
                 $scope.aventura = response;
+                carregarPersonagens();
             }
             else{
                 var dialog = $modal.open({
@@ -211,6 +279,28 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, Aventu
         carregar();        
     }
 
+    var carregarPersonagens = function(){
+
+            PersonagemService.todas($cookieStore.get('aventura'), function(err, response){
+                if (!err) {
+                    $scope.personagens = response;
+                }
+                else{
+                    var dialog = $modal.open({
+                      templateUrl: 'partial/dialog.html',
+                      controller: DialogCtrl,
+                      resolve: {
+                        message: function () {
+                          return 'Falha ao listas de personagens!';
+                        },
+                        title: function(){
+                            return 'Atenção!';
+                        }
+                      }
+                    }); 
+                }
+            })
+    };
 
 
     $scope.salvar = function(){
@@ -424,7 +514,7 @@ function personagemService($http){
         },
 
         todas: function(aventura, callback){
-            $http.get('/api/personagem/aventura' + aventura)
+            $http.get('/api/personagem/aventura/' + aventura)
             .success(function(response) {
                 callback(null, response);
             })

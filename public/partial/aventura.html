@@ -1,7 +1,7 @@
 <div class="container-fluid">
               <!-- Page Heading -->
   <div class="row">
-      <div class="col-lg-12">
+      <div class="col-md-12">
           <h1 class="page-header">
               Cadastro de Aventura
               <small></small>
@@ -9,7 +9,7 @@
       </div>
   </div>
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-md-12">
       <div class="panel panel-primary">
         <div class="panel-heading clearfix">
           <i class="fa fa-users"></i> Informações Gerais
@@ -32,324 +32,91 @@
   </div> 
 
   <div class="row" ng-show="permiteAdicionarPersonagem()">
-    <div class="col-lg-12">
+    <div class="col-md-12">
       <div class="panel panel-primary">
         <div class="panel-heading clearfix">
           <i class="fa fa-users"></i> Participantes
           <a href="#/personagem" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i></a>
         </div>
         <div class="panel-body">
-            <div class="col-lg-4">
+            <div class="col-md-4" ng-repeat="personagem in personagens">
               <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
-                      <a href="#/personagem">
+                      <a href="#/editar/personagem/{{personagem._id}}">
                         <img class="img-circle" style="max-width: 10%;max-height: 10%;" src="img/avatar.jpg">
                       </a>
-                   Nome
+                   {{personagem.nome}}
                 </div>
                 <div class="panel-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr><th>Caracteristica</th><th>Pontos</th><th></th></tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Força</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Habilidade</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Resistência</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Armadura</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr> 
-                            <tr>
-                              <td>Poder de Fogo</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Vida</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Magia</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>                                                                                                                                               
-                          </tbody>
-                        </table>
-                      </div>                    
-                </div>
-              </div>
-            </div> 
-
-            <div class="col-lg-4">
-              <div class="panel panel-primary">
-                <div class="panel-heading clearfix">
-                      <a href="#/personagem">
-                        <img class="img-circle" style="max-width: 10%;max-height: 10%;" src="img/avatar.jpg">
-                      </a>
-                   Nome
-                </div>
-                <div class="panel-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr><th>Caracteristica</th><th>Pontos</th><th></th></tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Força</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Habilidade</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Resistência</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Armadura</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr> 
-                            <tr>
-                              <td>Poder de Fogo</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Vida</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Magia</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>                                                                                                                                               
-                          </tbody>
-                        </table>
-                      </div>                    
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr><th>Caracteristica</th><th>#</th><th></th></tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Força</td>
+                          <td>{{personagem.forca}}</td>
+                          <td>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Habilidade</td>
+                          <td>{{personagem.habilidade}}</td>
+                          <td>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Resistência</td>
+                          <td>{{personagem.resistencia}}</td>
+                          <td>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Armadura</td>
+                          <td>{{personagem.armadura}}</td>
+                          <td>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                          </td>
+                        </tr> 
+                        <tr>
+                          <td>Poder de Fogo</td>
+                          <td>{{personagem.poderDeFogo}}</td>
+                          <td>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Vida</td>
+                          <td>{{personagem.vida}}</td>
+                          <td>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Magia</td>
+                          <td>{{personagem.magia}}</td>
+                          <td>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                          </td>
+                        </tr>                                                                                                                                               
+                      </tbody>
+                    </table>
+                  </div>                    
                 </div>
               </div>
             </div>
-
-            <div class="col-lg-4">
-              <div class="panel panel-primary">
-                <div class="panel-heading clearfix">
-                      <a href="#/personagem">
-                        <img class="img-circle" style="max-width: 10%;max-height: 10%;" src="img/avatar.jpg">
-                      </a>
-                   Nome
-                </div>
-                <div class="panel-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr><th>Caracteristica</th><th>Pontos</th><th></th></tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Força</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Habilidade</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Resistência</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Armadura</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr> 
-                            <tr>
-                              <td>Poder de Fogo</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Vida</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Magia</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>                                                                                                                                               
-                          </tbody>
-                        </table>
-                      </div>                    
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="panel panel-primary">
-                <div class="panel-heading clearfix">
-                      <a href="#/personagem">
-                        <img class="img-circle" style="max-width: 10%;max-height: 10%;" src="img/avatar.jpg">
-                      </a>
-                   Nome
-                </div>
-                <div class="panel-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr><th>Caracteristica</th><th>Pontos</th><th></th></tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Força</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Habilidade</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Resistência</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Armadura</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr> 
-                            <tr>
-                              <td>Poder de Fogo</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Vida</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Magia</td>
-                              <td>5</td>
-                              <td>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                                  <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
-                              </td>
-                            </tr>                                                                                                                                               
-                          </tbody>
-                        </table>
-                      </div>                    
-                </div>
-              </div>
-            </div>              
+          </div>
         </div>
       </div>
     </div> 
