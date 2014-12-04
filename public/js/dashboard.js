@@ -1,4 +1,11 @@
 (function(){ 
+String.prototype.hashCode = function() {
+  for(var ret = 0, i = 0, len = this.length; i < len; i++) {
+    ret = (31 * ret + this.charCodeAt(i)) << 0;
+  }
+  return ret;
+};
+
 angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies']);
 'use strict';
 
@@ -349,6 +356,20 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, Aventu
         }
     };
 
+    $scope.aumentaCaracteristica = function(prop, personagem){
+
+        personagem[prop]++;
+        PersonagemService.salvar(personagem);
+
+    }
+
+    $scope.diminuiCaracteristica = function(prop, personagem){
+
+        personagem[prop]--;
+        PersonagemService.salvar(personagem);
+
+    }    
+
     $scope.apagar = function(aventura){
         var dialog = $modal.open({
           templateUrl: 'partial/confirm-dialog.html',
@@ -505,11 +526,13 @@ function personagemService($http){
             $http.post('/api/personagem', personagem)
             .success(function(response) {
                 console.log("personagem adicionada com sucesso!");
-                callback(null, response);
+                if(callback)
+                    callback(null, response);
             })
             .error(function(response) {
                 console.log("error adding personagem!");
-                callback("Cannot submit data!");
+                if(callback)
+                    callback("Cannot submit data!");
             });
         },
 

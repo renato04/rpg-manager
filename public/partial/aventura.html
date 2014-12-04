@@ -58,56 +58,60 @@
                           <td>Força</td>
                           <td>{{personagem.forca}}</td>
                           <td>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="atualizarPersonagem('forca', personagem)">
+                                <i class="fa fa-plus"></i>
+                              </a>
+                              <a class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-minus"></i></a>
                           </td>
                         </tr>
                         <tr>
                           <td>Habilidade</td>
                           <td>{{personagem.habilidade}}</td>
                           <td>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="atualizarPersonagem('habilidade', personagem)"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('habilidade', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                           </td>
                         </tr>
                         <tr>
                           <td>Resistência</td>
                           <td>{{personagem.resistencia}}</td>
                           <td>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="atualizarPersonagem('resistencia', personagem)"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('resistencia', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                           </td>
                         </tr>
                         <tr>
                           <td>Armadura</td>
                           <td>{{personagem.armadura}}</td>
                           <td>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="atualizarPersonagem('armadura', personagem)"><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('armadura', personagem)"><i class="glyphicon glyphicon-minus">
+                              </i>
+                              </a>
                           </td>
                         </tr> 
                         <tr>
                           <td>Poder de Fogo</td>
                           <td>{{personagem.poderDeFogo}}</td>
                           <td>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="atualizarPersonagem('poderDeFogo', personagem)" ><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('poderDeFogo', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                           </td>
                         </tr>
                         <tr>
                           <td>Vida</td>
                           <td>{{personagem.vida}}</td>
                           <td>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="atualizarPersonagem('vida', personagem)" ><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('vida', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                           </td>
                         </tr>
                         <tr>
                           <td>Magia</td>
                           <td>{{personagem.magia}}</td>
                           <td>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" href="#/aventura"><i class="glyphicon glyphicon-minus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="atualizarPersonagem('magia', personagem)" ><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('magia', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                           </td>
                         </tr>                                                                                                                                               
                       </tbody>
