@@ -18,14 +18,14 @@ var personagem_controller = require('./controllers/personagem_controller.js');
 app.set('port', (process.env.PORT || port));
 
 var connStr = 'mongodb://rramosna:rramosna@ds052837.mongolab.com:52837/rpg';
-mongoose.connect(connStr, function(err) {
-    if (err)
-    {
-    	console.log('Error on connect to MongoDB' + err.toString());
-    	throw err;	
-    } 
-    console.log('Successfully connected to MongoDB');
-});
+// mongoose.connect(connStr, function(err) {
+//     if (err)
+//     {
+//     	console.log('Error on connect to MongoDB' + err.toString());
+//     	throw err;	
+//     } 
+//     console.log('Successfully connected to MongoDB');
+// });
 
 
 app.use(express.static(__dirname + '/public')); 				// set the static files location /public/img will be /img for users
