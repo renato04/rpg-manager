@@ -6,7 +6,7 @@ String.prototype.hashCode = function() {
   return ret;
 };
 
-angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngSocket']);
+angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngSocket', 'angularFileUpload']);
 'use strict';
 
 /**
@@ -128,7 +128,7 @@ function MasterCtrl($scope, $cookieStore, $window) {
     window.onresize = function() { $scope.$apply(); };
 }
 
-var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, PersonagemService) {
+var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, $upload, PersonagemService) {
     $scope.personagem = {};
     $scope.autenticado = true;
     
@@ -184,18 +184,35 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
                 $scope.personagem.codigo = personagem.codigo;
                  PersonagemService.salvar(personagem, function(err, personagemComCOdigo){
                     if (!err) {
-                        var dialog = $modal.open({
-                          templateUrl: 'partial/dialog.html',
-                          controller: DialogCtrl,
-                          resolve: {
-                            message: function () {
-                              return 'Personagem Salvo!';
-                            },
-                            title: function(){
-                                return 'Atenção!';
-                            }                    
-                          }
-                        });                          
+
+                        var file = $scope.selectedFile[0];
+                        $scope.upload = $upload.upload({
+                            url: 'photos/new',
+                            method: 'POST',
+                            data: angular.toJson($scope.personagem),
+                            file: file
+                        }).progress(function (evt) {
+//                            $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
+                              console.log( parseInt(100.0 * evt.loaded / evt.total, 10));
+                        }).success(function (data) {
+                            //do something
+                            alert(data);
+
+                            var dialog = $modal.open({
+                              templateUrl: 'partial/dialog.html',
+                              controller: DialogCtrl,
+                              resolve: {
+                                message: function () {
+                                  return 'Personagem Salvo!';
+                                },
+                                title: function(){
+                                    return 'Atenção!';
+                                }                    
+                              }
+                            });                              
+                        });
+
+                        
                     }
                     else{
                         var dialog = $modal.open({
@@ -231,6 +248,11 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
             }
         });
     };
+
+    $scope.onFileSelect = function ($files) {
+        $scope.uploadProgress = 0;
+        $scope.selectedFile = $files;
+    };    
 
     $scope.apagar = function(){
         var dialog = $modal.open({

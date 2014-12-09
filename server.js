@@ -68,8 +68,8 @@ app.get('/photos/new', function(req, res){
 
 app.post('/photos/new', function(req, res) {
 
-console.log(req.body)
-console.log(req.files)
+console.log(req.files);
+res.send(req.files['file'].path);
 });
 
 

@@ -1,4 +1,4 @@
-<form class="form-horizontal" name="personagemForm" enctype="multipart/form-data">
+<form class="form-horizontal" name="personagemForm" ng-submit="salvar()">
 
 	<div class="container-fluid">
 		<!-- Page Heading -->
@@ -112,7 +112,7 @@
 										</div>
 										<div class="row">
 
-											<input type="file" name="userPhoto" enctype="multipart/form-data" />
+											<input type="file" name="userPhoto" ng-file-select="onFileSelect($files)" />
       
 										</div>
 									  </div>
@@ -157,7 +157,7 @@
 							<button type="button" class="btn btn-danger" style="margin-top:1%" ng-disabled="$scope.personagem._id != null || !autenticado" ng-click="apagar()">
 								apagar
 							</button>							
-							<button type="button" class="btn btn-primary" style="margin-top:1%" ng-disabled="personagemForm.$invalid" ng-click="salvar()">
+							<button type="submit" class="btn btn-primary" style="margin-top:1%" ng-disabled="personagemForm.$invalid">
 								salvar
 							</button>
 						</div>				          
