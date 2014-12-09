@@ -60,6 +60,7 @@ app.get('/home', function(req, res) {
 app.get('/photos/new', function(req, res){
   res.send('<form method="post" enctype="multipart/form-data">'
     + '<p>Data: <input type="filename" name="filename" enctype="multipart/form-data"/></p>'
+    + '<p>file: <input type="text" name="txt" /></p>'
     + '<p>file: <input type="file" name="file" /></p>'
     + '<p><input type="submit" value="Upload" /></p>'
     + '</form>');

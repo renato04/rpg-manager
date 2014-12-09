@@ -170,13 +170,13 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
 
     $scope.salvar = function(){
         $scope.personagem.aventura = $cookieStore.get('aventura');
-        $scope.personagem.forca = 0;
-        $scope.personagem.habilidade = 0;
-        $scope.personagem.resistencia = 0;
-        $scope.personagem.armadura = 0;
-        $scope.personagem.poderDeFogo = 0;
-        $scope.personagem.vida = 0;
-        $scope.personagem.magia = 0;
+        $scope.personagem.forca =  $scope.personagem.forca ? $scope.personagem.forca : 0;
+        $scope.personagem.habilidade = $scope.personagem.habilidade ? $scope.personagem.habilidade : 0;
+        $scope.personagem.resistencia = $scope.personagem.resistencia ? $scope.personagem.resistencia : 0;
+        $scope.personagem.armadura = $scope.personagem.armadura ? $scope.personagem.armadura : 0;
+        $scope.personagem.poderDeFogo = $scope.personagem.poderDeFogo ? $scope.personagem.poderDeFogo : 0;
+        $scope.personagem.vida = $scope.personagem.vida ? $scope.personagem.vida : 0;
+        $scope.personagem.magia = $scope.personagem.magia ? $scope.personagem.magia : 0;
 
         PersonagemService.salvar($scope.personagem, function(err, personagem){
             if (!err) {

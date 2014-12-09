@@ -1,4 +1,4 @@
-<form class="form-horizontal" name="personagemForm">
+<form class="form-horizontal" name="personagemForm" enctype="multipart/form-data">
 
 	<div class="container-fluid">
 		<!-- Page Heading -->
@@ -111,8 +111,9 @@
 											<img src="img/avatar.jpg" style="max-width: 50%;max-height: 50%;">
 										</div>
 										<div class="row">
-												<input type="file" id="files" name="files[]" />
-												<output id="list"></output>            
+
+											<input type="file" name="userPhoto" enctype="multipart/form-data" />
+      
 										</div>
 									  </div>
 									</div>
