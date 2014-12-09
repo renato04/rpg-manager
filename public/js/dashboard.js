@@ -6,7 +6,7 @@ String.prototype.hashCode = function() {
   return ret;
 };
 
-angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies']);
+angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngSocket']);
 'use strict';
 
 /**
@@ -114,13 +114,17 @@ function MasterCtrl($scope, $cookieStore) {
     window.onresize = function() { $scope.$apply(); };
 }
 
-var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, PersonagemService) {
+var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, PersonagemService) {
     $scope.personagem = {};
 
     if ($stateParams.id) {
         PersonagemService.obter($stateParams.id, function(err, personagem){
             if (!err) {
                 $scope.personagem = personagem;
+                
+                $socket.on('personagemAtualizado', function(personagem) {
+                    $scope.personagem = personagem;
+                });      
             }
             else{
                 var dialog = $modal.open({
@@ -141,6 +145,13 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
 
     $scope.salvar = function(){
         $scope.personagem.aventura = $cookieStore.get('aventura');
+        $scope.personagem.forca = 0;
+        $scope.personagem.habilidade = 0;
+        $scope.personagem.resistencia = 0;
+        $scope.personagem.armadura = 0;
+        $scope.personagem.poderDeFogo = 0;
+        $scope.personagem.vida = 0;
+        $scope.personagem.magia = 0;
 
         PersonagemService.salvar($scope.personagem, function(err, personagem){
             if (!err) {
@@ -251,7 +262,7 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
 
 };
 
-var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, AventuraService, PersonagemService){
+var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socket, AventuraService, PersonagemService){
 
     $scope.aventura = {};
     $scope.aventuras = {};
@@ -263,6 +274,9 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, Aventu
             if (!err) {
                 $cookieStore.put('aventura', $stateParams.id);
                 $scope.aventura = response;
+
+              
+                
                 carregarPersonagens();
             }
             else{
@@ -308,6 +322,8 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, Aventu
 
         carregar();        
     }
+
+
 
     var carregarPersonagens = function(){
 
@@ -382,14 +398,22 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, Aventu
     $scope.aumentaCaracteristica = function(prop, personagem){
 
         personagem[prop]++;
-        PersonagemService.salvar(personagem);
+        PersonagemService.salvar(personagem,  function(err, response){
+            if (!err) {
+              $socket.emit('personagemAtualizado', personagem);        
+            }
+        });
 
     }
 
     $scope.diminuiCaracteristica = function(prop, personagem){
 
         personagem[prop]--;
-        PersonagemService.salvar(personagem);
+        PersonagemService.salvar(personagem,  function(err, response){
+            if (!err) {
+              $socket.emit('personagemAtualizado', personagem);        
+            }
+        });
 
     }    
 
@@ -591,4 +615,6 @@ function personagemService($http){
         } 
     };
 };
+
+
 })();

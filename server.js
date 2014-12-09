@@ -79,7 +79,16 @@ app.get('*', function(req, res) {
 
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+    console.log('a user connected');
+
+    socket.on('personagemAtualizado', function(personagem){
+        console.log('personagemAtualizado: ' + personagem);
+        io.emit('personagemAtualizado', personagem);        
+    });  
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });  
 });
 
 	
