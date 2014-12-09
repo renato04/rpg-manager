@@ -7,6 +7,8 @@ var morgan = require('morgan'); 			// log requests to the console (express4)
 var bodyParser = require('body-parser'); 	// pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var multer  = require('multer')
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var port = 8080											//port that will be listen
 
 var account_controller = require('./controllers/account_controller.js');
@@ -18,14 +20,14 @@ var personagem_controller = require('./controllers/personagem_controller.js');
 app.set('port', (process.env.PORT || port));
 
 var connStr = 'mongodb://rramosna:rramosna@ds052837.mongolab.com:52837/rpg';
-// mongoose.connect(connStr, function(err) {
-//     if (err)
-//     {
-//     	console.log('Error on connect to MongoDB' + err.toString());
-//     	throw err;	
-//     } 
-//     console.log('Successfully connected to MongoDB');
-// });
+mongoose.connect(connStr, function(err) {
+    if (err)
+    {
+    	console.log('Error on connect to MongoDB' + err.toString());
+    	throw err;	
+    } 
+    console.log('Successfully connected to MongoDB');
+});
 
 
 app.use(express.static(__dirname + '/public')); 				// set the static files location /public/img will be /img for users
@@ -76,10 +78,11 @@ app.get('*', function(req, res) {
 	});
 
 
-
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
 
 	
-	
-app.listen(app.get('port'), function() {
+http.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
