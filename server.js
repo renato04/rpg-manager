@@ -86,9 +86,9 @@ io.on('connection', function(socket){
         io.emit('personagemAtualizado', personagem);        
     });  
 
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-    });  
+    // socket.on('disconnect', function(){
+    //     console.log('user disconnected');
+    // });  
 });
 
 	

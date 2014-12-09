@@ -30,8 +30,9 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'tables.html'
         })
         .state('ficha', {
-            url: '/ficha', 
-            templateUrl: 'partial/ficha.html'
+            url: '/ficha/:id', 
+            controller: PersonagemCtrl,            
+            templateUrl: 'partial/personagem.html'
         })
         .state('aventuras', {
             url: '/aventuras',
@@ -64,11 +65,16 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
  * Master Controller
  */
 angular.module('Dashboard')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore) {
+function MasterCtrl($scope, $cookieStore, $window) {
     
     $scope.user = $cookieStore.get('user');
+    $scope.char = $cookieStore.get('char');
+
+    if (!$scope.user && !$scope.char) {
+      $window.location.href=  "/";
+    }
     /**
      * Sidebar Toggle & Cookie Control
      *

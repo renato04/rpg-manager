@@ -13,10 +13,10 @@ var FormCtrl = function($scope, $animate, $modal, $window, $http, $cookieStore) 
     $http.post('/api/authenticate', $scope.user)
       .success(function(data) {
         
-        $window.location.href= '/home' ;
-
         $cookieStore.put('user', data);
+        $cookieStore.remove('char');        
         
+        $window.location.href= '/home' ;
       })
       .error(function(data) {
         var dialog = $modal.open({
@@ -62,7 +62,7 @@ var DialogCtrl = function($scope, $modalInstance, message, title){
   };  
 };
 
-var CharCtrl = function($scope, $http, $modalInstance, $window, $modal) {
+var CharCtrl = function($scope, $http, $modalInstance, $window, $modal, $cookieStore) {
 
   $scope.personagem = {};
 
@@ -72,7 +72,9 @@ var CharCtrl = function($scope, $http, $modalInstance, $window, $modal) {
     $http.get('/api/personagem/codigo/' + $scope.personagem.codigo, $scope.personagem)
       .success(function(personagem) {
         
-        $window.location.href= "/home#/editar/personagem/" + personagem[0]._id;
+        $cookieStore.remove('user');
+        $cookieStore.put('char', personagem);        
+        $window.location.href= "/home#/ficha/" + personagem[0]._id;
         
         
       })
