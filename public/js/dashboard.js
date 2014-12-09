@@ -30,7 +30,7 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'tables.html'
         })
         .state('ficha', {
-            url: '/ficha/:id', 
+            url: '/ficha/:id/:autenticado', 
             controller: PersonagemCtrl,            
             templateUrl: 'partial/personagem.html'
         })
@@ -130,31 +130,42 @@ function MasterCtrl($scope, $cookieStore, $window) {
 
 var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, PersonagemService) {
     $scope.personagem = {};
-
+    $scope.autenticado = true;
+    
     if ($stateParams.id) {
-        PersonagemService.obter($stateParams.id, function(err, personagem){
-            if (!err) {
-                $scope.personagem = personagem;
-                
-                $socket.on('personagemAtualizado', function(personagem) {
-                    $scope.personagem = personagem;
-                });      
-            }
-            else{
-                var dialog = $modal.open({
-                  templateUrl: 'partial/dialog.html',
-                  controller: DialogCtrl,
-                  resolve: {
-                    message: function () {
-                      return 'Falha ao carregar personagem!';
-                    },
-                    title: function(){
-                        return 'Atenção!';
-                    }
+      if ($stateParams.autenticado) {
+        $scope.autenticado = false;
+      }
+
+
+
+      PersonagemService.obter($stateParams.id, function(err, personagem){
+          if (!err) {
+              $scope.personagem = personagem;
+
+              if (!$scope.autenticado) {
+                $cookieStore.put('aventura', personagem.aventura);
+              }              
+              
+              $socket.on('personagemAtualizado', function(personagem) {
+                  $scope.personagem = personagem;
+              });      
+          }
+          else{
+              var dialog = $modal.open({
+                templateUrl: 'partial/dialog.html',
+                controller: DialogCtrl,
+                resolve: {
+                  message: function () {
+                    return 'Falha ao carregar personagem!';
+                  },
+                  title: function(){
+                      return 'Atenção!';
                   }
-                }); 
-            }
-        });
+                }
+              }); 
+          }
+      });
     }    
 
     $scope.salvar = function(){

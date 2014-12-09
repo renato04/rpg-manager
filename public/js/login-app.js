@@ -74,7 +74,7 @@ var CharCtrl = function($scope, $http, $modalInstance, $window, $modal, $cookieS
         
         $cookieStore.remove('user');
         $cookieStore.put('char', personagem);        
-        $window.location.href= "/home#/ficha/" + personagem[0]._id;
+        $window.location.href= "/home#/ficha/" + personagem[0]._id + "/S";
         
         
       })
