@@ -83,6 +83,14 @@ function MasterCtrl($scope, $cookieStore, $window) {
 
     $scope.getWidth = function() { return window.innerWidth; };
 
+    $scope.logoff = function() { 
+
+      $scope.user = $cookieStore.remove('user');
+      $scope.char = $cookieStore.remove('char');      
+      $window.location.href=  "/";
+
+    };    
+
     $scope.$watch($scope.getWidth, function(newValue, oldValue)
     {
         if(newValue >= mobileView)
