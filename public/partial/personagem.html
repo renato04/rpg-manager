@@ -13,7 +13,7 @@
 		        <div class="col-md-12">
 					<div class="panel panel-primary">
 			            <div class="panel-heading clearfix">
-			              <i class="fa fa-users"></i>Personagem - {{personagem.codigo || ''}}
+			              <i class="fa fa-user"></i>Personagem - ({{personagem.codigo || ''}})
 			            </div>
 			            <div class="panel-body">
 			                <div class="row">
@@ -33,10 +33,20 @@
 
 							</div>
 				        	<div class="row">
-								<div class="col-md-5">
+								<div class="col-md-12">
+									<div class="panel panel-primary">
+									  <div class="panel-heading clearfix">
+										<i class="fa fa-file"></i> Background
+									  </div>
+									  <div class="panel-body padding">
+										<textarea class="form-control" rows="5" ng-model="personagem.background"></textarea>
+									  </div>
+									</div>
+								</div> 				        		
+								<div class="col-md-6">
 									<div class="panel panel-primary" >
 									  <div class="panel-heading clearfix">
-										<i class="fa fa-users"></i> Características
+										<i class="fa fa-file-text-o"></i> Características
 									  </div>
 									  <div class="panel-body " >
 										<div class="row">
@@ -88,10 +98,13 @@
 									  </div>
 									</div>
 								</div>			        		
+
+
+
 								<div class="col-md-6">
 									<div class="panel panel-primary">
 									  <div class="panel-heading clearfix">
-										<i class="fa fa-users"></i> Imagem
+										<i class="fa fa-file-image-o"></i> Imagem
 									  </div>
 									  <div class="panel-body padding">
 										<div class="row">
@@ -103,48 +116,41 @@
 										</div>
 									  </div>
 									</div>
-								</div>
+								</div>								
+			           		 </div>
+			           		<div class="row">
 								<div class="col-md-4">
 									<div class="panel panel-primary">
 									  <div class="panel-heading clearfix">
-										<i class="fa fa-users"></i> Vantagens
+										<i class="fa fa-thumbs-o-up"></i> Vantagens
 									  </div>
-									  <div class="panel-body padding">
-										<textarea class="form-control" ng-model="personagem.vantagens" rows="4"></textarea>
+									  <div class="panel-body">
+										<textarea class="form-control" ng-model="personagem.vantagens" rows="10"></textarea>
 									  </div>
 									</div>
 							    </div>
 								<div class="col-md-4">
 									<div class="panel panel-primary">
 									  <div class="panel-heading clearfix">
-										<i class="fa fa-users"></i> Desvantagens
+										<i class="fa fa-thumbs-o-down"></i> Desvantagens
 									  </div>
 									  <div class="panel-body padding">
-										<textarea class="form-control" rows="4" ng-model="personagem.desvantagens"></textarea>
+										<textarea class="form-control" rows="10" ng-model="personagem.desvantagens"></textarea>
 									  </div>
 									</div>
 							  	</div>  
 								<div class="col-md-4">
 									<div class="panel panel-primary">
 									  <div class="panel-heading clearfix" >
-										<i class="fa fa-users"></i> Equipamento
+										<i class="fa fa-cogs"></i> Equipamento
 									  </div>
 									  <div class="panel-body padding">
-										<textarea class="form-control" rows="4" ng-model="personagem.equipamento"></textarea>
+										<textarea class="form-control" rows="10" ng-model="personagem.equipamento"></textarea>
 									  </div>
 									</div>
 								</div>           
-								<div class="col-md-12">
-									<div class="panel panel-primary">
-									  <div class="panel-heading clearfix">
-										<i class="fa fa-users"></i> Background
-									  </div>
-									  <div class="panel-body padding">
-										<textarea class="form-control" rows="5" ng-model="personagem.background"></textarea>
-									  </div>
-									</div>
-								</div> 
-			           		 </div>
+
+			           		</div>
 				          </div>
 						<div class="modal-footer modal-success">
 							<button type="button" class="btn btn-danger" style="margin-top:1%" ng-disabled="$scope.personagem._id != null" ng-click="apagar()">
