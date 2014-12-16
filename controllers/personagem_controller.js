@@ -32,6 +32,7 @@ exports.create = function(req, res, next) {
   personagem.equipamento = req.body.equipamento;
   personagem.background = req.body.background;
   personagem.codigo = req.body.codigo;
+  personagem.imageUrl = req.body.imageUrl;
 
   if (req.body._id) {
     Personagem.findById(req.body._id, function (err, personagem) {
@@ -53,6 +54,7 @@ exports.create = function(req, res, next) {
       personagem.equipamento = req.body.equipamento;
       personagem.background = req.body.background;
       personagem.codigo = req.body.codigo;
+      personagem.imageUrl = req.body.imageUrl;
 
       personagem.save(function (err) {
         if (err) {

@@ -43,7 +43,7 @@
               <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
                       <a href="#/editar/personagem/{{personagem._id}}">
-                        <img class="img-circle" style="max-width: 10%;max-height: 10%;" src="img/avatar.jpg">
+                        <img  style="max-width:10%;max-height: 10%;" src="{{getImageUrl(personagem) || 'img/avatar.jpg'}}">
                       </a>
                    {{personagem.nome}}
                 </div>

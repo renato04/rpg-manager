@@ -143,6 +143,10 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
           if (!err) {
               $scope.personagem = personagem;
 
+              if ($scope.personagem.imageUrl) {
+                 $scope.personagem.imageUrl = "uploads/" + $scope.personagem.imageUrl.split('\\')[2]; 
+              }
+
               if (!$scope.autenticado) {
                 $cookieStore.put('aventura', personagem.aventura);
               }              
@@ -180,57 +184,72 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
 
         PersonagemService.salvar($scope.personagem, function(err, personagem){
             if (!err) {
-                personagem.codigo =   personagem._id.hashCode();  
-                $scope.personagem.codigo = personagem.codigo;
-                 PersonagemService.salvar(personagem, function(err, personagemComCOdigo){
-                    if (!err) {
+              personagem.codigo =   Math.abs(personagem._id.hashCode());  
+              $scope.personagem.codigo = personagem.codigo;
+              $scope.personagem._id = personagem._id;
+              PersonagemService.salvar(personagem, function(err, personagemComCOdigo){
+              if (!err) {
 
-                        var file = $scope.selectedFile[0];
-                        $scope.upload = $upload.upload({
-                            url: 'photos/new',
-                            method: 'POST',
-                            data: angular.toJson($scope.personagem),
-                            file: file
-                        }).progress(function (evt) {
-//                            $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
-                              console.log( parseInt(100.0 * evt.loaded / evt.total, 10));
-                        }).success(function (data) {
-                            //do something
-                            alert(data);
+                var file = $scope.selectedFile[0];
+                $scope.upload = $upload.upload({
+                    url: 'photos/new',
+                    method: 'POST',
+                    data: angular.toJson($scope.personagem),
+                    file: file
+                }).progress(function (evt) {
+          //                            $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
+                      console.log( parseInt(100.0 * evt.loaded / evt.total, 10));
+                }).success(function (url) {
 
-                            var dialog = $modal.open({
-                              templateUrl: 'partial/dialog.html',
-                              controller: DialogCtrl,
-                              resolve: {
-                                message: function () {
-                                  return 'Personagem Salvo!';
-                                },
-                                title: function(){
-                                    return 'Atenção!';
-                                }                    
-                              }
-                            });                              
-                        });
-
-                        
-                    }
-                    else{
-                        var dialog = $modal.open({
-                          templateUrl: 'partial/dialog.html',
-                          controller: DialogCtrl,
-                          resolve: {
-                            message: function () {
-                              return 'Falha ao salvar Personagem!';
-                            },
-                            title: function(){
-                                return 'Atenção!';
+                    $scope.personagem.imageUrl = url;
+                   
+                    PersonagemService.salvar($scope.personagem, function(err, personagemComCOdigo){
+                        if (!err) {
+                          var dialog = $modal.open({
+                            templateUrl: 'partial/dialog.html',
+                            controller: DialogCtrl,
+                            resolve: {
+                              message: function () {
+                                return 'Personagem Salvo!';
+                              },
+                              title: function(){
+                                  return 'Atenção!';
+                              }                    
                             }
+                          });     
+                        }
+                        else{
+                          var dialog = $modal.open({
+                            templateUrl: 'partial/dialog.html',
+                            controller: DialogCtrl,
+                            resolve: {
+                              message: function () {
+                                return 'Falha ao salvar Personagem!';
+                              },
+                              title: function(){
+                                  return 'Atenção!';
+                              }
+                            }
+                          });                                 
+                        }
+                      });
+                    });
+                  }
+                  else{
+                      var dialog = $modal.open({
+                        templateUrl: 'partial/dialog.html',
+                        controller: DialogCtrl,
+                        resolve: {
+                          message: function () {
+                            return 'Falha ao salvar Personagem!';
+                          },
+                          title: function(){
+                              return 'Atenção!';
                           }
-                        });                         
-
-                    }
-
-                 });            
+                        }
+                      });                         
+                  }
+            });
             }
             else{
                 var dialog = $modal.open({
@@ -451,6 +470,16 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
             }
         });
 
+    }
+
+    $scope.getImageUrl = function(personagem){
+
+      if (personagem.imageUrl) {
+        return "uploads/" + personagem.imageUrl.split('\\')[2]; 
+      }
+      else{
+        return undefined;
+      }
     }
 
     $scope.diminuiCaracteristica = function(prop, personagem){
