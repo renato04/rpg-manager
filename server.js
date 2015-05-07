@@ -73,12 +73,11 @@ res.send(req.files['file'].path);
 });
 
 
-
 app.get('*', function(req, res) {
 		res.sendfile('./public/home.html'); // load the single view file 
 	});
 
-
+  
 io.on('connection', function(socket){
     console.log('a user connected');
 

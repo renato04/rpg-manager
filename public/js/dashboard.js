@@ -137,22 +137,16 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
         $scope.autenticado = false;
       }
 
-
-
       PersonagemService.obter($stateParams.id, function(err, personagem){
           if (!err) {
               $scope.personagem = personagem;
-
-              if ($scope.personagem.imageUrl) {
-                 $scope.personagem.imageUrl = "uploads/" + $scope.personagem.imageUrl.split('\\')[2]; 
-              }
 
               if (!$scope.autenticado) {
                 $cookieStore.put('aventura', personagem.aventura);
               }              
               
               $socket.on('personagemAtualizado', function(personagem) {
-                  $scope.personagem = personagem;
+                $scope.personagem = personagem;
               });      
           }
           else{
@@ -201,7 +195,7 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
                       console.log( parseInt(100.0 * evt.loaded / evt.total, 10));
                 }).success(function (url) {
 
-                    $scope.personagem.imageUrl = url;
+                    $scope.personagem.imageUrl = url.substring(6);
                    
                     PersonagemService.salvar($scope.personagem, function(err, personagemComCOdigo){
                         if (!err) {
@@ -464,6 +458,7 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
     $scope.aumentaCaracteristica = function(prop, personagem){
 
         personagem[prop]++;
+        personagem.imageUrl = $scope.getImageUrl(personagem);
         PersonagemService.salvar(personagem,  function(err, response){
             if (!err) {
               $socket.emit('personagemAtualizado', personagem);        
@@ -475,7 +470,7 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
     $scope.getImageUrl = function(personagem){
 
       if (personagem.imageUrl) {
-        return "uploads/" + personagem.imageUrl.split('\\')[2]; 
+        return personagem.imageUrl;
       }
       else{
         return undefined;
@@ -485,6 +480,7 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
     $scope.diminuiCaracteristica = function(prop, personagem){
 
         personagem[prop]--;
+        personagem.imageUrl = $scope.getImageUrl(personagem);
         PersonagemService.salvar(personagem,  function(err, response){
             if (!err) {
               $socket.emit('personagemAtualizado', personagem);        
