@@ -25,7 +25,10 @@ var FormCtrl = function($scope, $animate, $modal, $window, $http, $cookieStore) 
           resolve: {
             message: function () {
               return 'Usuário e/ou senha invalido.';
-            }
+            },
+            title: function(){
+                return 'Atenção!';
+            }  
           }
         });  
       });
@@ -118,8 +121,11 @@ var LoginCtrl = function($scope, $http, $modalInstance, $window, $modal) {
           controller: DialogCtrl,
           resolve: {
             message: function () {
-              return 'Bem vindo! Você foi cadastrado com sucesso!';
-            }
+              return 'Você foi cadastrado com sucesso!';
+            },
+            title: function(){
+                return 'Bem vindo!';
+            }               
           }
         });    
 
