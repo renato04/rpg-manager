@@ -48,8 +48,44 @@
                    {{personagem.nome}}
                 </div>
                 <div class="panel-body">
+            			<div class="row" ng-show="personagem._id">
+            				<div class="col-md-1">
+            					<p><b>HP:</b></p> 
+            				</div>
+            				<div class="col-md-7">
+            					<progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
+            				</div>
+                    <div>
+                       <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('hp', personagem)" ><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('hp', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
+                    </div>                      
+                  </div>   
+            			<div class="row" ng-show="personagem._id">
+            				<div class="col-md-1">
+            					<p><b>MP:</b></p> 
+            				</div>
+            				<div class="col-md-7">
+            					<progressbar max="100" value="((personagem.mp / personagem.magia) * 100)"  type="info">{{personagem.mp}} / {{personagem.magia}}</progressbar>
+            				</div>
+                    <div>
+                       <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('mp', personagem)" ><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('mp', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
+                    </div>                    
+                  </div>
+            			<div class="row" ng-show="personagem._id">
+            				<div class="col-md-1">
+            					<p><b>XP:</b></p> 
+            				</div>
+            				<div class="col-md-7">
+            					<progressbar max="10" value="((personagem.xp / 10) * 10)"  type="warning">{{personagem.xp}} / 10</progressbar>
+            				</div>
+                    <div>
+                       <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('xp', personagem)" ><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('xp', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
+                    </div>
+                  </div>                                                   
                   <div class="table-responsive">
-                    <progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
+                    
                     <table class="table">
                       <thead>
                         <tr><th>Caracteristica</th><th>#</th><th></th></tr>
@@ -115,14 +151,6 @@
                               <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('magia', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                           </td>
                         </tr>
-                        <tr>
-                          <td>HP</td>
-                          <td>{{personagem.hp}}</td>
-                          <td>
-                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('hp', personagem)" ><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('hp', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
-                          </td>
-                        </tr>                                                                                                                                                                        
                       </tbody>
                     </table>
                     
