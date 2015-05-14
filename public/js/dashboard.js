@@ -6,14 +6,16 @@ String.prototype.hashCode = function() {
   return ret;
 };
 
-angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngSocket', 'angularFileUpload']);
+angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngSocket', 'angularFileUpload', 'angular-loading-bar']);
 'use strict';
 
 /**
  * Route configuration for the Dashboard module.
  */
-angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider', 
-    function($stateProvider, $urlRouterProvider) {
+angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider', 'cfpLoadingBarProvider',
+    function($stateProvider, $urlRouterProvider, cfpLoadingBarProvider) {
+      
+    cfpLoadingBarProvider.includeSpinner = false;      
 
     // For unmatched routes
     $urlRouterProvider.otherwise('/');
