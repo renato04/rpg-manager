@@ -113,9 +113,18 @@
                               <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('magia', personagem)" ><i class="fa fa-plus"></i></a>
                               <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('magia', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                           </td>
-                        </tr>                                                                                                                                               
+                        </tr>
+                        <tr>
+                          <td>HP</td>
+                          <td>{{personagem.hp}}</td>
+                          <td>
+                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('hp', personagem)" ><i class="fa fa-plus"></i></a>
+                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('hp', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
+                          </td>
+                        </tr>                                                                                                                                                                        
                       </tbody>
                     </table>
+                    <progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
                   </div>                    
                 </div>
               </div>
