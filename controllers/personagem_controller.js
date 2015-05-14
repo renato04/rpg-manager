@@ -35,6 +35,8 @@ exports.create = function(req, res, next) {
   personagem.codigo = req.body.codigo;
   personagem.imageUrl = req.body.imageUrl;
   personagem.hp = req.body.hp;
+  personagem.mp = req.body.mp;
+  personagem.xp = req.body.xp;
 
   if (req.body._id) {
     Personagem.findById(req.body._id, function (err, personagem) {
@@ -58,6 +60,8 @@ exports.create = function(req, res, next) {
       personagem.codigo = req.body.codigo;
       personagem.imageUrl = req.body.imageUrl;
       personagem.hp = req.body.hp;
+      personagem.mp = req.body.mp;
+      personagem.xp = req.body.xp;      
 
       personagem.save(function (err) {
         if (err) {

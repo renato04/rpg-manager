@@ -49,6 +49,7 @@
                 </div>
                 <div class="panel-body">
                   <div class="table-responsive">
+                    <progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
                     <table class="table">
                       <thead>
                         <tr><th>Caracteristica</th><th>#</th><th></th></tr>
@@ -124,7 +125,7 @@
                         </tr>                                                                                                                                                                        
                       </tbody>
                     </table>
-                    <progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
+                    
                   </div>                    
                 </div>
               </div>

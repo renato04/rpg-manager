@@ -1,3 +1,4 @@
+/// <reference path="../../typings/angularjs/angular.d.ts"/>
 (function(){ 
 String.prototype.hashCode = function() {
   for(var ret = 0, i = 0, len = this.length; i < len; i++) {
@@ -133,7 +134,9 @@ function MasterCtrl($scope, $cookieStore, $window) {
 var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, $upload, PersonagemService) {
     $scope.personagem = {};
     $scope.autenticado = true;
-    $scope.value = 2;
+    $scope.hp = 0;
+    $scope.mp = 0;
+    $scope.xp = 0;
     
     if ($stateParams.id) {
       if ($stateParams.autenticado) {

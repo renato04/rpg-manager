@@ -14,8 +14,28 @@
 		        </h1>				
 <!--				<progressbar max="max" value="dynamic"><span style="color:black; white-space:nowrap;" type="success">{{dynamic}} / {{max}}</span></progressbar>-->
 <!--				<progressbar max="personagem.vida" value="personagem.hp"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>					-->
-	<progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
+	
 		    </div>
+			<div class="row" ng-show="personagem._id">
+				<div class="col-md-1">
+					<p><b>HP:</b></p> 
+				</div>
+				<div class="col-md-2">
+					<progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
+				</div>
+				<div class="col-md-1">
+					<p><b>MP:</b></p> 
+				</div>
+				<div class="col-md-2">
+					<progressbar max="100" value="((personagem.mp / personagem.magia) * 100)"  type="info">{{personagem.mp}} / {{personagem.magia}}</progressbar>
+				</div>
+				<div class="col-md-1">
+					<p><b>XP:</b></p> 
+				</div>
+				<div class="col-md-2">
+					<progressbar max="10" value="((personagem.xp / 10) * 10)"  type="warning">{{personagem.xp}} / 10</progressbar>
+				</div>
+			</div>				
 		    <div class="row">
 		        <div class="col-md-12">
 					<div class="panel panel-primary">
