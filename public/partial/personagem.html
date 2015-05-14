@@ -5,9 +5,12 @@
 		<div class="row">
 		    <div class="col-md-12">
 		        <h1 class="page-header">
-		            Ficha de Personagem
+		            Ficha de Personagem e
 		            <small></small>
 		        </h1>
+<!--				<progressbar max="max" value="dynamic"><span style="color:black; white-space:nowrap;" type="success">{{dynamic}} / {{max}}</span></progressbar>-->
+<!--				<progressbar max="personagem.vida" value="personagem.hp"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>					-->
+	<progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
 		    </div>
 		    <div class="row">
 		        <div class="col-md-12">
@@ -157,7 +160,7 @@
 							<button type="button" class="btn btn-danger" style="margin-top:1%" ng-disabled="$scope.personagem._id != null || !autenticado" ng-click="apagar()">
 								apagar
 							</button>							
-							<button type="submit" class="btn btn-primary" style="margin-top:1%" ng-disabled="personagemForm.$invalid">
+							<button type="submit" class="btn btn-primary" style="margin-top:1%" ng-disabled="personagemForm.$invalid" ng-disabled="!autenticado">
 								salvar
 							</button>
 						</div>				          

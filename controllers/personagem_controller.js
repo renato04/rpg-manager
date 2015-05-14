@@ -1,3 +1,4 @@
+/// <reference path="../models/personagem.js""/>
 /**
  * Module dependencies.
  */
@@ -33,6 +34,7 @@ exports.create = function(req, res, next) {
   personagem.background = req.body.background;
   personagem.codigo = req.body.codigo;
   personagem.imageUrl = req.body.imageUrl;
+  personagem.hp = req.body.hp;
 
   if (req.body._id) {
     Personagem.findById(req.body._id, function (err, personagem) {
@@ -55,6 +57,7 @@ exports.create = function(req, res, next) {
       personagem.background = req.body.background;
       personagem.codigo = req.body.codigo;
       personagem.imageUrl = req.body.imageUrl;
+      personagem.hp = req.body.hp;
 
       personagem.save(function (err) {
         if (err) {

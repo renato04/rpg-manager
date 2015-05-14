@@ -25,7 +25,8 @@ var PersonagemSchema = new mongoose.Schema({
   equipamento:{type: String, required:false},
   background:{type: String, required:false},
   codigo:{type: Number, required:false},
-  imageUrl: {type:String, required:false}
+  imageUrl: {type:String, required:false},
+  hp: { type: Number, required: false },
 });
 
 PersonagemSchema.statics.listarPorAventura = function(aventura, callback) {

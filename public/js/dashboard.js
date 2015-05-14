@@ -131,6 +131,7 @@ function MasterCtrl($scope, $cookieStore, $window) {
 var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, $upload, PersonagemService) {
     $scope.personagem = {};
     $scope.autenticado = true;
+    $scope.value = 2;
     
     if ($stateParams.id) {
       if ($stateParams.autenticado) {
