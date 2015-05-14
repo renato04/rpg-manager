@@ -4,10 +4,14 @@
 		<!-- Page Heading -->
 		<div class="row">
 		    <div class="col-md-12">
-		        <h1 class="page-header">
-		            Ficha de Personagem e
+		        <h1 class="page-header" ng-show="autenticado">
+		            Ficha de Personagem
 		            <small></small>
 		        </h1>
+				<h1 class="page-header" ng-show="!autenticado">
+		            {{personagem.nome}}
+		            <small></small>
+		        </h1>				
 <!--				<progressbar max="max" value="dynamic"><span style="color:black; white-space:nowrap;" type="success">{{dynamic}} / {{max}}</span></progressbar>-->
 <!--				<progressbar max="personagem.vida" value="personagem.hp"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>					-->
 	<progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
