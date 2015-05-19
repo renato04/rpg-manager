@@ -68,12 +68,12 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider', 'cfp
  * Master Controller
  */
 angular.module('Dashboard')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', '$mdSidenav', '$mdUtil', '$location' ,MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', '$mdSidenav', '$mdUtil', '$location' , '$cookies',MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $location) {
+function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $location, $cookies) {
     
     $scope.user = $cookieStore.get('user');
-    $scope.char = $cookieStore.get('char');
+    $scope.char = $cookies['char'];
     
     $scope.toggleLeft = buildToggler('right');
     

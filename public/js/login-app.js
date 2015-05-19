@@ -65,7 +65,7 @@ var DialogCtrl = function($scope, $modalInstance, message, title){
   };  
 };
 
-var CharCtrl = function($scope, $http, $modalInstance, $window, $modal, $cookieStore) {
+var CharCtrl = function($scope, $http, $modalInstance, $window, $modal, $cookies) {
 
   $scope.personagem = {};
 
@@ -75,8 +75,8 @@ var CharCtrl = function($scope, $http, $modalInstance, $window, $modal, $cookieS
     $http.get('/api/personagem/codigo/' + $scope.personagem.codigo, $scope.personagem)
       .success(function(personagem) {
         
-        $cookieStore.remove('user');
-        $cookieStore.put('char', personagem);        
+        delete $cookies['user'];
+        $cookies['char']   = personagem  ;  
         $window.location.href= "/home#/ficha/" + personagem[0]._id + "/S";
         
         
