@@ -12,7 +12,7 @@
     <title>RpgWeb</title>
 
     <!-- Bootstrap Core CSS -->
-<!--    <link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
 <!--    <link href="css/sb-admin.css" rel="stylesheet">-->
@@ -35,10 +35,25 @@
 </head>
 
 <body ng-controller="MasterCtrl">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="right">
+      <md-toolbar class="md-theme-light">
+            <md-button class="md-icon-button" aria-label="Settings"  ng-click="close()">
+              <md-icon md-svg-icon="bower_components/material-design-icons/navigation/svg/design/ic_close_24px.svg"></md-icon>
+            </md-button>      
+      </md-toolbar>
+      <md-content layout-padding>
+            <md-list>
+              <md-list-item ng-click="go('/index')">
+                  Aventuras
+              </md-list-item>
+              <md-divider></md-divider>
+            <md-list>
+      </md-content>
+    </md-sidenav>    
     <div layout="column">
         <md-toolbar md-scroll-shrink>
           <div class="md-toolbar-tools docs-toolbar-tools">
-            <md-button class="md-icon-button" aria-label="Settings">
+            <md-button class="md-icon-button" aria-label="Settings"  ng-click="toggleLeft()">
               <md-icon md-svg-icon="bower_components/material-design-icons/navigation/svg/design/ic_menu_24px.svg"></md-icon>
             </md-button>
             <h2>

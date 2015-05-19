@@ -68,12 +68,32 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider', 'cfp
  * Master Controller
  */
 angular.module('Dashboard')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', '$mdSidenav', '$mdUtil', '$location' ,MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, $window) {
+function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $location) {
     
     $scope.user = $cookieStore.get('user');
     $scope.char = $cookieStore.get('char');
+    
+    $scope.toggleLeft = buildToggler('right');
+    
+    function buildToggler(navID) {
+      var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+              .toggle()
+              .then(function () {
+  
+              });
+          },300);
+      return debounceFn;
+    }    
+    
+    $scope.close = function () {
+      $mdSidenav('right').close()
+        .then(function () {
+
+        });
+    };    
 
     if (!$scope.user && !$scope.char) {
       $window.location.href=  "/";
@@ -129,6 +149,14 @@ function MasterCtrl($scope, $cookieStore, $window) {
     };
 
     window.onresize = function() { $scope.$apply(); };
+    
+    $scope.go = function ( path ) {
+      $mdSidenav('right').close()
+        .then(function () {
+          $location.path( path );
+        });
+      
+    };      
 }
 
 var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, $upload, PersonagemService) {

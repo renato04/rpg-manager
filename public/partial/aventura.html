@@ -1,54 +1,41 @@
 <div class="container-fluid">
+  <md-subheader class="md-primary">Aventura</md-subheader>
               <!-- Page Heading -->
-  <div class="row">
-      <div class="col-md-12">
-          <h1 class="page-header">
-              Cadastro de Aventura
-              <small></small>
-          </h1>
-      </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel panel-primary">
-        <div class="panel-heading clearfix">
-          <i class="fa fa-users"></i> Informações Gerais
-        </div>
-        <div class="panel-body">
-          <form name="aventuraForm">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Nome</label>
-              <input type="text" class="form-control"  placeholder="Nome" ng-model="aventura.nome" required>
-            </div>
-            <label for="resumoAventura">Resumo</label>
-            <textarea class="form-control" id="resumoAventura" rows="5" ng-model="aventura.resumo"></textarea>
-            <div class="text-right clearfix">
-              <button type="button" class="btn btn-primary" style="margin-top:1%" ng-disabled="aventuraForm.$invalid" ng-click="salvar()">salvar</button>
-            </div>
-          </form> 
-         </div>          
-       </div>
-     </div>
-  </div> 
-
-  <div class="row" ng-show="permiteAdicionarPersonagem()">
-    <div class="col-md-12">
-      <div class="panel panel-primary">
-        <div class="panel-heading clearfix">
-          <i class="fa fa-users"></i> Participantes
-          <a href="#/personagem" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i></a>
-        </div>
-        <div class="panel-body">
-            <div class="col-md-4" ng-repeat="personagem in personagens">
-              <div class="panel panel-primary">
-                <div class="panel-heading clearfix">
-                      <a href="#/editar/personagem/{{personagem._id}}">
-                        <img  style="max-width:10%;max-height: 10%;" src="{{getImageUrl(personagem) || 'img/avatar.jpg'}}">
-                      </a>
-                   {{personagem.nome}}
-                </div>
-                <div class="panel-body">
-            			<div class="row" ng-show="personagem._id">
+  <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Informações Gerais">
+        <md-content class="md-padding">
+          <md-card>
+              <md-card-content>
+                <form name="aventuraForm">
+                  <md-input-container>
+                    <input type="text" class="form-control"  placeholder="Nome" ng-model="aventura.nome" required>
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Resumo</label>
+                    <textarea class="form-control" id="resumoAventura" rows="5" ng-model="aventura.resumo"></textarea>
+                  </md-input-container>
+                </form> 
+              </md-card-contet>
+              <div class="md-actions" layout="row" layout-align="end center">
+                <md-button class="md-icon-button md-primary" aria-label="Settings" ng-show="permiteAdicionarPersonagem()"  ng-click="go('/personagem')">
+                  <md-icon md-svg-icon="bower_components/material-design-icons/social/svg/design/ic_person_add_24px.svg"></md-icon>
+                </md-button>                
+                <md-button class="md-raised md-primary" ng-disabled="aventuraForm.$invalid" ng-click="salvar()"> salvar</md-button>
+              </div>    
+          </md-card>        
+        </md-content>
+      </md-tab>
+      <md-tab label="{{personagem.nome}}" ng-repeat="personagem in personagens">
+        <md-content class="md-padding">
+            <md-card>
+                <a href="#/editar/personagem/{{personagem._id}}">
+                    <img src="{{getImageUrl(personagem) || 'img/avatar.jpg'}}" class="md-card-image" style="max-width:10%;max-height: 10%; padding: 2%;" alt="{{personagem.nome}}">
+                </a>
+                <md-card-content>
+                        <md-content>
+                          <md-card>
+                              <md-card-content>
+             			<div class="row" ng-show="personagem._id">
             				<div class="col-xs-1 col-sm-1">
             					<p><b>HP:</b></p> 
             				</div>
@@ -83,7 +70,23 @@
                        <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('xp', personagem)" ><i class="fa fa-plus"></i></a>
                         <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('xp', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                     </div>
-                  </div>                                                   
+                  </div>   
+                              </md-card-contet>
+  
+                          </md-card>        
+                        </md-content>                
+
+                  
+                                                           
+  
+                </md-card-content>
+         
+            </md-card>
+                  <md-tabs md-dynamic-height md-border-bottom>
+                      <md-tab label="Características">
+                        <md-content class="md-padding">
+                          <md-card>
+                              <md-card-content>
                   <div class="table-responsive">
                     
                     <table class="table">
@@ -154,13 +157,56 @@
                       </tbody>
                     </table>
                     
-                  </div>                    
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> 
-  </div>  
-</div>
+                  </div>  
+                              </md-card-contet>
+  
+                          </md-card>        
+                        </md-content>
+                      </md-tab>
+                      <md-tab label="Vantagens">
+                        <md-content class="md-padding">
+                          <md-card>
+                              <md-card-content>
+
+                  <md-input-container>
+                    <textarea class="form-control" id="resumoAventura" rows="5" >{{personagem.vantagens}}</textarea>
+                  </md-input-container>
+                              </md-card-contet>
+  
+                          </md-card>        
+                        </md-content>
+                      </md-tab>    
+                      <md-tab label="Desvantagens">
+                        <md-content class="md-padding">
+                          <md-card>
+                              <md-card-content>
+                 
+                  <md-input-container>
+                    <textarea class="form-control" id="resumoAventura" rows="5" >{{personagem.desvantagens}}  </textarea>
+                  </md-input-container> 
+                              </md-card-contet>
+  
+                          </md-card>        
+                        </md-content>
+                      </md-tab>      
+                      <md-tab label="Equipamentos">
+                        <md-content class="md-padding">
+                          <md-card>
+                              <md-card-content>
+                  <md-input-container>
+                    <textarea class="form-control" id="resumoAventura" rows="5" >{{personagem.equipamento}} </textarea>
+                  </md-input-container>                               
+
+                              </md-card-contet>
+  
+                          </md-card>        
+                        </md-content>
+                      </md-tab>                                                          
+                  </md-tabs>                 
+        </md-content>
+         
+      </md-tab>
+     
+    </md-tabs>
+
+ 
