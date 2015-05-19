@@ -159,7 +159,7 @@ function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $locatio
     };      
 }
 
-var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, $upload, PersonagemService) {
+var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, $upload, $mdDialog, PersonagemService) {
     $scope.personagem = {};
     $scope.autenticado = true;
     $scope.hp = 0;
@@ -216,82 +216,73 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
               $scope.personagem.codigo = personagem.codigo;
               $scope.personagem._id = personagem._id;
               PersonagemService.salvar(personagem, function(err, personagemComCOdigo){
+              
               if (!err) {
-
-                var file = $scope.selectedFile[0];
-                $scope.upload = $upload.upload({
-                    url: 'photos/new',
-                    method: 'POST',
-                    data: angular.toJson($scope.personagem),
-                    file: file
-                }).progress(function (evt) {
-          //                            $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
-                      console.log( parseInt(100.0 * evt.loaded / evt.total, 10));
-                }).success(function (url) {
-
-                    $scope.personagem.imageUrl = url.substring(6);
-                   
-                    PersonagemService.salvar($scope.personagem, function(err, personagemComCOdigo){
-                        if (!err) {
-                          var dialog = $modal.open({
-                            templateUrl: 'partial/dialog.html',
-                            controller: DialogCtrl,
-                            resolve: {
-                              message: function () {
-                                return 'Personagem Salvo!';
-                              },
-                              title: function(){
-                                  return 'Atenção!';
-                              }                    
-                            }
-                          });     
-                        }
-                        else{
-                          var dialog = $modal.open({
-                            templateUrl: 'partial/dialog.html',
-                            controller: DialogCtrl,
-                            resolve: {
-                              message: function () {
-                                return 'Falha ao salvar Personagem!';
-                              },
-                              title: function(){
-                                  return 'Atenção!';
-                              }
-                            }
-                          });                                 
-                        }
+                  if ($scope.selectedFile) {
+                                    var file = $scope.selectedFile[0];
+                  $scope.upload = $upload.upload({
+                      url: 'photos/new',
+                      method: 'POST',
+                      data: angular.toJson($scope.personagem),
+                      file: file
+                  }).progress(function (evt) {
+            //                            $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
+                        console.log( parseInt(100.0 * evt.loaded / evt.total, 10));
+                  }).success(function (url) {
+  
+                      $scope.personagem.imageUrl = url.substring(6);
+                     
+                      PersonagemService.salvar($scope.personagem, function(err, personagemComCOdigo){
+                          if (!err) {
+                              $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Operação realiado com sucesso.')
+                                  .ok('ok')
+                               );   
+                          }
+                          else{
+                               $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha na operação.')
+                                  .ok('ok')
+                               );                                 
+                          }
+                        });
                       });
-                    });
+                    }
+                    else{
+                                  $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Operação realiado com sucesso.')
+                                  .ok('ok'));
+                        }
+
                   }
                   else{
-                      var dialog = $modal.open({
-                        templateUrl: 'partial/dialog.html',
-                        controller: DialogCtrl,
-                        resolve: {
-                          message: function () {
-                            return 'Falha ao salvar Personagem!';
-                          },
-                          title: function(){
-                              return 'Atenção!';
-                          }
-                        }
-                      });                         
+                               $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha na operação.')
+                                  .ok('ok')
+                               );                          
                   }
-            });
+               });
             }
             else{
-                var dialog = $modal.open({
-                  templateUrl: 'partial/dialog.html',
-                  controller: DialogCtrl,
-                  resolve: {
-                    message: function () {
-                      return 'Falha ao salvar Personagem!';
-                    },
-                    title: function(){
-                        return 'Atenção!';
-                    }
-                  }
-                }); 
+                               $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha na operação.')
+                                  .ok('ok')
+                               );   
             }
         });
     };
@@ -302,61 +293,45 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
     };    
 
     $scope.apagar = function(){
-        var dialog = $modal.open({
-          templateUrl: 'partial/confirm-dialog.html',
-          controller: DialogCtrl,
-          resolve: {
-            message: function () {
-              return 'Deseja realmente apagar esse personagem?';
-            },
-            title: function(){
-                return 'Atenção!';
-            }                    
-          }
-        });
 
-        dialog.result.then(function (result) {
-            if (result) {
+        var confirm = $mdDialog.confirm()
+          .title('Deseja realmente apagar esse personagem?')
+          .content('Todos os dados serão perdidos.')
+          .ok('ok')
+          .cancel('cancelar');
+          
+      $mdDialog.show(confirm).then(function() {
                 PersonagemService.apagar($scope.personagem._id, function(err, response){
                     if (!err) {
-                        var dialog = $modal.open({
-                          templateUrl: 'partial/dialog.html',
-                          controller: DialogCtrl,
-                          resolve: {
-                            message: function () {
-                              return 'Personagem apagada!';
-                            },
-                            title: function(){
-                                return 'Atenção!';
-                            }                    
-                          }
-                        });    
+                               $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Personagem apagado.')
+                                  .ok('ok')
+                               );   
 
                         $window.location.href = '/home#/editar/aventura/' + $cookieStore.get('aventura');
 
                     }
                     else{
-                        var dialog = $modal.open({
-                          templateUrl: 'partial/dialog.html',
-                          controller: DialogCtrl,
-                          resolve: {
-                            message: function () {
-                              return 'Falha ao apagar aventura!';
-                            },
-                            title: function(){
-                                return 'Atenção!';
-                            }
-                          }
-                        }); 
+                               $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha na operação.')
+                                  .ok('ok')
+                               );   
                     }
                 });
-            }
-        });                       
+          });          
+
+                 
     };    
 
 };
 
-var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socket, $location, AventuraService, PersonagemService){
+var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socket, $location,$mdDialog, AventuraService, PersonagemService){
 
     $scope.aventura = {};
     $scope.aventuras = {};
@@ -374,18 +349,13 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
                 carregarPersonagens();
             }
             else{
-                var dialog = $modal.open({
-                  templateUrl: 'partial/dialog.html',
-                  controller: DialogCtrl,
-                  resolve: {
-                    message: function () {
-                      return 'Falha ao carregar aventura!';
-                    },
-                    title: function(){
-                        return 'Atenção!';
-                    }
-                  }
-                }); 
+                               $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha na operação.')
+                                  .ok('ok')
+                               );   
             }
         });
     }
@@ -398,18 +368,13 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
                     $scope.aventuras = response;
                 }
                 else{
-                    var dialog = $modal.open({
-                      templateUrl: 'partial/dialog.html',
-                      controller: DialogCtrl,
-                      resolve: {
-                        message: function () {
-                          return 'Falha ao listas aventuras!';
-                        },
-                        title: function(){
-                            return 'Atenção!';
-                        }
-                      }
-                    }); 
+                               $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha ao carregar dados.')
+                                  .ok('ok')
+                               );   
                 }
             })
         };
@@ -426,18 +391,13 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
                     $scope.personagens = response;
                 }
                 else{
-                    var dialog = $modal.open({
-                      templateUrl: 'partial/dialog.html',
-                      controller: DialogCtrl,
-                      resolve: {
-                        message: function () {
-                          return 'Falha ao listas de personagens!';
-                        },
-                        title: function(){
-                            return 'Atenção!';
-                        }
-                      }
-                    }); 
+                              $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha ao carregar dados.')
+                                  .ok('ok')
+                               );  
                 }
             })
     };
@@ -448,32 +408,22 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
         AventuraService.salvar($scope.aventura, function(err, aventura){
             if (!err) {
                 $cookieStore.put('aventura', aventura._id);
-                var dialog = $modal.open({
-                  templateUrl: 'partial/dialog.html',
-                  controller: DialogCtrl,
-                  resolve: {
-                    message: function () {
-                      return 'Aventura salva!';
-                    },
-                    title: function(){
-                        return 'Atenção!';
-                    }                    
-                  }
-                });    
+                              $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Aventura salva!')
+                                  .ok('ok')
+                               );     
             }
             else{
-                var dialog = $modal.open({
-                  templateUrl: 'partial/dialog.html',
-                  controller: DialogCtrl,
-                  resolve: {
-                    message: function () {
-                      return 'Falha ao salvar aventura!';
-                    },
-                    title: function(){
-                        return 'Atenção!';
-                    }
-                  }
-                }); 
+                              $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha ao salvar dados.')
+                                  .ok('ok')
+                               );  
             }
         });
     };
@@ -523,56 +473,40 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
 
     }    
 
-    $scope.apagar = function(aventura){
-        var dialog = $modal.open({
-          templateUrl: 'partial/confirm-dialog.html',
-          controller: DialogCtrl,
-          resolve: {
-            message: function () {
-              return 'Deseja realmente apagar essa aventura, todas fichas relacionadas a ela serão apagadas.';
-            },
-            title: function(){
-                return 'Atenção!';
-            }                    
-          }
-        });
-
-        dialog.result.then(function (result) {
-            if (result) {
+    $scope.apagar = function(aventura, ev){
+      
+              var confirm = $mdDialog.confirm()
+          .title('Deseja realmente apagar essa aventuram?')
+          .content('Todas fichas relacionadas a ela serão apagadas.')
+          .ok('ok')
+          .cancel('cancelar')
+          .targetEvent(event);
+          
+      $mdDialog.show(confirm).then(function() {
                 AventuraService.apagar(aventura._id, function(err, response){
                     if (!err) {
-                        var dialog = $modal.open({
-                          templateUrl: 'partial/dialog.html',
-                          controller: DialogCtrl,
-                          resolve: {
-                            message: function () {
-                              return 'Aventura apagada!';
-                            },
-                            title: function(){
-                                return 'Atenção!';
-                            }                    
-                          }
-                        });    
+                              $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Aventura apagada.')
+                                  .ok('ok')
+                               );    
 
                         carregar();
                     }
                     else{
-                        var dialog = $modal.open({
-                          templateUrl: 'partial/dialog.html',
-                          controller: DialogCtrl,
-                          resolve: {
-                            message: function () {
-                              return 'Falha ao apagar aventura!';
-                            },
-                            title: function(){
-                                return 'Atenção!';
-                            }
-                          }
-                        }); 
+                              $mdDialog.show(
+                                $mdDialog.alert()
+                                  .parent(angular.element(document.body))
+                                  .title('Atenção')
+                                  .content('Falha ao apagar dados.')
+                                  .ok('ok')
+                               );  
                     }
                 });
-            }
-        });                       
+          });    
+                      
     };
     
     $scope.go = function ( path ) {

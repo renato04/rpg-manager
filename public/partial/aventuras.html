@@ -21,9 +21,7 @@
             <md-list>
               <md-list-item ng-repeat="item in aventuras | filter:{nome: q}" ng-click="go('/editar/aventura/' + item._id)">
                   <p> {{item.nome}} </p>
-                  <md-button class="md-icon-button" aria-label="Apagar" ng-click="apagar(item)">
-                    <md-icon md-svg-icon="bower_components/material-design-icons/action/svg/design/ic_delete_24px.svg"></md-icon>
-                  </md-button>
+                    <md-icon class="md-secondary" md-svg-icon="bower_components/material-design-icons/action/svg/design/ic_delete_24px.svg" ng-click="apagar(item, $event)"></md-icon>
                   <md-divider></md-divider>
               </md-list-item>
               

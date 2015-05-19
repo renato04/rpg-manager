@@ -105,8 +105,8 @@
 					<md-card>
 					 <md-card-content>
 			          <md-input-container no-flyout>
-								<div class="row">
-											<img src="{{ personagem.imageUrl || 'img/avatar.jpg'}}" style="max-width: 50%;max-height: 50%;">
+										<div class="row">
+											<img src="{{ personagem.imageUrl || $scope.selectedFile[0] || 'img/avatar.jpg'}}" style="max-width: 40%;max-height: 40%;">
 										</div>
 										<div class="row">
 
