@@ -1,83 +1,58 @@
 <form class="form-horizontal" name="personagemForm" ng-submit="salvar()">
 
-	<div class="container-fluid">
-		<!-- Page Heading -->
-		<div class="row">
-		    <div class="col-md-12">
-		        <h1 class="page-header" ng-show="autenticado">
-		            Ficha de Personagem
-		            <small></small>
-		        </h1>
-				<h1 class="page-header" ng-show="!autenticado">
-		            {{personagem.nome}}
-		            <small></small>
-		        </h1>				
-<!--				<progressbar max="max" value="dynamic"><span style="color:black; white-space:nowrap;" type="success">{{dynamic}} / {{max}}</span></progressbar>-->
-<!--				<progressbar max="personagem.vida" value="personagem.hp"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>					-->
 	
-		    </div>
-			<div class="row" ng-show="personagem._id">
-				<div class="col-md-1">
-					<p><b>HP:</b></p> 
+			
+  <md-card>
+      <md-card-content>
+	  		<section layout="row" layout-align="spacspace-around" ng-show="personagem.codigo" >
+				  <div flex flex-order="1"style="padding:1%;">
+			  		<md-subheader ng-show="personagem.codigo" class="md-primary">{{personagem.codigo}}</md-subheader>
+				  </div>
+				  <div  flex flex-order="2"style="padding:1%;">
+					  <b>HP:</b> <progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
+				  </div>
+				  <div  flex flex-order="3"style="padding:1%;">
+					  <b>MP:</b> <progressbar max="100" value="((personagem.mp / personagem.magia) * 100)"  type="info">{{personagem.mp}} / {{personagem.magia}}</progressbar>
+				  </div>
+				  <div  flex flex-order="4" style="padding:1%;">
+					  <b>XP:</b> <progressbar max="10" value="((personagem.xp / 10) * 10)"  type="warning">{{personagem.xp}} / 10</progressbar>
+				  </div>				  
+			 </section>
+			<section  layout="row" >
+				<div flex flex-order="1">
+			        <h1 class="md-title" ng-show="autenticado">
+			          <md-input-container no-flyout>
+					  <label>Nome</label>
+			            <input type="text" class="form-control"  ng-model="personagem.nome" required>
+			          </md-input-container>					
+			        </h1>					
 				</div>
-				<div class="col-md-2">
-					<progressbar max="100" value="((personagem.hp / personagem.vida) * 100)"  type="success">{{personagem.hp}} / {{personagem.vida}}</progressbar>
+				<div flex flex-order="2">
+			        <h1 class="md-title" ng-show="autenticado">
+			          <md-input-container no-flyout>
+					  <label>Pontos</label>
+			            <input type="text" class="form-control"  ng-model="personagem.pontos" required>
+			          </md-input-container>					
+			        </h1>					
 				</div>
-				<div class="col-md-1">
-					<p><b>MP:</b></p> 
-				</div>
-				<div class="col-md-2">
-					<progressbar max="100" value="((personagem.mp / personagem.magia) * 100)"  type="info">{{personagem.mp}} / {{personagem.magia}}</progressbar>
-				</div>
-				<div class="col-md-1">
-					<p><b>XP:</b></p> 
-				</div>
-				<div class="col-md-2">
-					<progressbar max="10" value="((personagem.xp / 10) * 10)"  type="warning">{{personagem.xp}} / 10</progressbar>
-				</div>
-			</div>				
-		    <div class="row">
-		        <div class="col-md-12">
-					<div class="panel panel-primary">
-			            <div class="panel-heading clearfix">
-			              <i class="fa fa-user"></i>Personagem - ({{personagem.codigo || ''}})
-			            </div>
-			            <div class="panel-body">
-			                <div class="row">
-								<div class="col-md-8">
-								  <div class="form-group" style="padding-left: 2%;">
-								    <label>Nome</label>
-								    <input type="text" class="form-control"  placeholder="Nome" ng-model="personagem.nome" ng-disabled="!autenticado" required>
-								  </div>
-								</div>
-
-								<div class="col-md-2">
-								  <div class="form-group" style="padding-left: 2%;">
-								    <label for="exampleInputEmail1">Pontos</label>
-								    <input type="text" class="form-control"  placeholder="Pontos" ng-model="personagem.pontos" ng-disabled="!autenticado">
-								  </div>
-								</div>                
-
-							</div>
-				        	<div class="row">
-								<div class="col-md-12">
-									<div class="panel panel-primary">
-									  <div class="panel-heading clearfix">
-										<i class="fa fa-file"></i> Background
-									  </div>
-									  <div class="panel-body padding">
-										<textarea class="form-control" rows="5" ng-model="personagem.background"></textarea>
-									  </div>
-									</div>
-								</div> 				        		
-								<div class="col-md-6">
-									<div class="panel panel-primary" >
-									  <div class="panel-heading clearfix">
-										<i class="fa fa-file-text-o"></i> Características
-									  </div>
-									  <div class="panel-body " >
-										<div class="row">
-										  <div class="col-md-12" >
+			</section>
+			<md-tabs md-dynamic-height	>
+			  <md-tab label="Background">
+			  	<md-content class="md-padding">
+					<md-card>
+					 <md-card-content>
+			          <md-input-container no-flyout>
+			            <textarea type="text" class="form-control"  ng-model="personagem.background"></textarea>
+			          </md-input-container>	
+					 </md-card-content>
+					</md-card>				  
+				</md-content>
+			  </md-tab>
+			  <md-tab label="Características">
+			  	<md-content class="md-padding">
+					<md-card>
+					 <md-card-content>
+			          <md-input-container no-flyout>
 											<div class="form-group" ng-class="{error: personagemForm.forca.$invalid}">
 											  <label for="inputEmail3" class="col-sm-5 control-label">Força</label>
 											  <div class="col-sm-2">
@@ -119,22 +94,18 @@
 											  <div class="col-sm-2">
 												<input type="number" class="form-control" ng-model="personagem.magia" ng-disabled="!autenticado" placeholder="">
 											  </div>
-											</div>
-										  </div>         
-										</div>
-									  </div>
-									</div>
-								</div>			        		
-
-
-
-								<div class="col-md-6">
-									<div class="panel panel-primary">
-									  <div class="panel-heading clearfix">
-										<i class="fa fa-file-image-o"></i> Imagem
-									  </div>
-									  <div class="panel-body padding">
-										<div class="row">
+											</div>					  
+			          </md-input-container>	
+					 </md-card-content>
+					</md-card>				  
+				</md-content>
+			  </md-tab>
+			  <md-tab label="Imagem">
+			  	<md-content class="md-padding">
+					<md-card>
+					 <md-card-content>
+			          <md-input-container no-flyout>
+								<div class="row">
 											<img src="{{ personagem.imageUrl || 'img/avatar.jpg'}}" style="max-width: 50%;max-height: 50%;">
 										</div>
 										<div class="row">
@@ -142,56 +113,58 @@
 											<input type="file" name="userPhoto" ng-file-select="onFileSelect($files)" />
       
 										</div>
-									  </div>
-									</div>
-								</div>								
-			           		 </div>
-			           		<div class="row">
-								<div class="col-md-4">
-									<div class="panel panel-primary">
-									  <div class="panel-heading clearfix">
-										<i class="fa fa-thumbs-o-up"></i> Vantagens
-									  </div>
-									  <div class="panel-body">
-										<textarea class="form-control" ng-model="personagem.vantagens" rows="10" ng-disabled="!autenticado"></textarea>
-									  </div>
-									</div>
-							    </div>
-								<div class="col-md-4">
-									<div class="panel panel-primary">
-									  <div class="panel-heading clearfix">
-										<i class="fa fa-thumbs-o-down"></i> Desvantagens
-									  </div>
-									  <div class="panel-body padding">
-										<textarea class="form-control" rows="10" ng-model="personagem.desvantagens" ng-disabled="!autenticado" ></textarea>
-									  </div>
-									</div>
-							  	</div>  
-								<div class="col-md-4">
-									<div class="panel panel-primary">
-									  <div class="panel-heading clearfix" >
-										<i class="fa fa-cogs"></i> Equipamento
-									  </div>
-									  <div class="panel-body padding">
-										<textarea class="form-control" rows="10" ng-model="personagem.equipamento" ng-disabled="!autenticado"></textarea>
-									  </div>
-									</div>
-								</div>           
-
-			           		</div>
-				          </div>
-						<div class="modal-footer modal-success">
-							<button type="button" class="btn btn-danger" style="margin-top:1%" ng-disabled="$scope.personagem._id != null || !autenticado" ng-click="apagar()">
-								apagar
-							</button>							
-							<button type="submit" class="btn btn-primary" style="margin-top:1%" ng-disabled="personagemForm.$invalid" ng-disabled="!autenticado">
-								salvar
-							</button>
-						</div>				          
-			        </div>
-		        </div>
-		    </div>
-	    </div>
-	</div>
+			          </md-input-container>	
+					 </md-card-content>
+					</md-card>				  
+				</md-content>
+			  </md-tab>		
+			  <md-tab label="Vantagens">
+			  	<md-content class="md-padding">
+					<md-card>
+					 <md-card-content>
+			          <md-input-container no-flyout>
+			          <md-input-container no-flyout>
+			            <textarea type="text" class="form-control"  ng-model="personagem.vantagens"></textarea>
+			          </md-input-container>	
+			          </md-input-container>	
+					 </md-card-content>
+					</md-card>				  
+				</md-content>
+			  </md-tab>				  	  
+			  <md-tab label="DesVantagens">
+			  	<md-content class="md-padding">
+					<md-card>
+					 <md-card-content>
+			          <md-input-container no-flyout>
+			          <md-input-container no-flyout>
+			            <textarea type="text" class="form-control"  ng-model="personagem.desvantagens"></textarea>
+			          </md-input-container>	
+			          </md-input-container>	
+					 </md-card-content>
+					</md-card>				  
+				</md-content>
+			  </md-tab>
+			  <md-tab label="Equipamento">
+			  	<md-content class="md-padding">
+					<md-card>
+					 <md-card-content>
+			          <md-input-container no-flyout>
+			          <md-input-container no-flyout>
+			            <textarea type="text" class="form-control"  ng-model="personagem.equipamento"></textarea>
+			          </md-input-container>	
+			          </md-input-container>	
+					 </md-card-content>
+					</md-card>				  
+				</md-content>
+			  </md-tab>				  	
+			</md-tabs>
+      </md-card-contet>
+      <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-raised md-warn" ng-disabled="$scope.personagem._id != null || !autenticado" ng-click="apagar()"> apagar</md-button>                
+        <md-button  class="md-raised md-primary" ng-disabled="personagemForm.$invalid" ng-disabled="!autenticado" ng-click="personagemForm.submit()"> salvar</md-button>
+      </div>    
+  </md-card>  
+  		
+	
 </form>
 
