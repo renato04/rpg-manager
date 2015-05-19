@@ -7,7 +7,7 @@ String.prototype.hashCode = function() {
   return ret;
 };
 
-angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngSocket', 'angularFileUpload', 'angular-loading-bar']);
+angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngSocket', 'angularFileUpload', 'angular-loading-bar', 'ngMaterial']);
 'use strict';
 
 /**
@@ -328,7 +328,7 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
 
 };
 
-var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socket, AventuraService, PersonagemService){
+var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socket, $location, AventuraService, PersonagemService){
 
     $scope.aventura = {};
     $scope.aventuras = {};
@@ -546,6 +546,10 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
             }
         });                       
     };
+    
+    $scope.go = function ( path ) {
+      $location.path( path );
+    };    
 };
 
 var DialogCtrl = function($scope, $modalInstance, message, title){

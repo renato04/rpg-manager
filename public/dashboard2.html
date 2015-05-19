@@ -12,10 +12,12 @@
     <title>RpgWeb</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!--    <link href="css/bootstrap.min.css" rel="stylesheet">-->
 
     <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+<!--    <link href="css/sb-admin.css" rel="stylesheet">-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">        
         
      <link href="lib/angular-loading-bar/loading-bar.css" rel="stylesheet">
 
@@ -33,84 +35,29 @@
 </head>
 
 <body ng-controller="MasterCtrl">
+    <div layout="column">
+        <md-toolbar md-scroll-shrink>
+          <div class="md-toolbar-tools docs-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Settings">
+              <md-icon md-svg-icon="bower_components/material-design-icons/navigation/svg/design/ic_menu_24px.svg"></md-icon>
+            </md-button>
+            <h2>
+              <span>RpgWeb</span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="More">
+              <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
 
-    <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand">RpgWeb</a>
-            </div>
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-<!--                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li> -->
-                <li class="dropdown" ng-show="user.username">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user.username || char.nome}} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a ng-click="logoff()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens 
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li>
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="#/aventuras"><i class="fa fa-fw fa-bar-chart-o"></i> Aventuras</a>
-                    </li>
-                    <li>
-                        <a href="#/personagens"><i class="fa fa-fw fa-table"></i> Personagens</a>
-                    </li>
-                    <li>
-                        <a href="#/aventuras"><i class="fa fa-fw fa-edit"></i> asd</a>
-                    </li>
-                </ul>
-            </div>-->
-            <!-- /.navbar-collapse -->
-        </nav>
-
-        <div id="page-wrapper">
-
-        <section data-ui-view></section>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- /#page-wrapper -->
-
+        <md-content layout-padding md-scroll-y>
+    
+                <section data-ui-view></section>
+        </md-content>        
+        
     </div>
-    <!-- /#wrapper -->
-
+    
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
@@ -118,7 +65,10 @@
     <script src="js/bootstrap.min.js"></script>
 
     <!-- SCRIPTS -->
-        <script src="lib/angular/angular.js"></script>
+        <script src="/bower_components/angular/angular.js"></script>
+        <script src="/bower_components/angular-aria/angular-aria.js"></script>
+        <script src="/bower_components/angular-animate/angular-animate.js"></script>
+        <script src="/bower_components/angular-material/angular-material.js"></script>
         <script src="lib/angular-cookies/angular-cookies.js"></script>
         <script src="lib/angular-bootstrap/ui-bootstrap.js"></script>
         <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
