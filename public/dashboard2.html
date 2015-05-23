@@ -35,11 +35,16 @@
 </head>
 
 <body ng-controller="MasterCtrl">
-    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="right">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
       <md-toolbar class="md-theme-light">
-            <md-button class="md-icon-button" aria-label="Settings"  ng-click="close()">
-              <md-icon md-svg-icon="bower_components/material-design-icons/navigation/svg/design/ic_close_24px.svg"></md-icon>
-            </md-button>      
+           <div class="md-toolbar-tools docs-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings"  ng-click="close()">
+                  <md-icon md-svg-icon="bower_components/material-design-icons/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                </md-button>   
+                <h2>
+                  <span>Menu</span>
+                </h2>               
+          </div>            
       </md-toolbar>
       <md-content layout-padding>
             <md-list>
@@ -64,8 +69,8 @@
               <span>RpgWeb</span>
             </h2>
             <span flex></span>
-            <md-button class="md-icon-button" aria-label="More">
-              <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+            <md-button class="md-icon-button" aria-label="More" ng-click="toggleRight()">
+              <md-icon md-svg-icon="bower_components/material-design-icons/editor/svg/design/ic_format_list_numbered_24px.svg"></md-icon>
             </md-button>
           </div>
         </md-toolbar>
@@ -76,6 +81,63 @@
         </md-content>        
         
     </div>
+    
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+      <md-toolbar class="md-theme-light">
+          <div class="md-toolbar-tools docs-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings"  ng-click="close()">
+                  <md-icon md-svg-icon="bower_components/material-design-icons/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                </md-button>   
+                <h4>
+                  <span>Rolagem de Dados</span>
+                </h4>   
+                <span flex></span>            
+                <md-button class="md-icon-button" aria-label="Settings"  ng-click="close()">
+                  <md-icon md-svg-icon="bower_components//material-design-icons/image/svg/design/ic_looks_6_24px.svg"></md-icon>
+                </md-button>   
+          </div>                       
+      </md-toolbar>
+      <md-content layout-padding>
+            <md-list>
+                  <md-list-item>
+                      <p> Jacks rolou </p>
+                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{1}}_24px.svg"></md-icon>
+                      <md-divider></md-divider>
+                  </md-list-item>
+                  <md-list-item>
+                      <p> Jacks rolou </p>
+                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{2}}_24px.svg"></md-icon>
+                      <md-divider></md-divider>
+                  </md-list-item>
+                  <md-list-item>
+                      <p> Jacks rolou </p>
+                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{3}}_24px.svg"></md-icon>
+                      <md-divider></md-divider>
+                  </md-list-item>
+                  <md-list-item>
+                      <p> Jacks rolou </p>
+                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{4}}_24px.svg"></md-icon>
+                      <md-divider></md-divider>
+                  </md-list-item>
+                  <md-list-item>
+                      <p> Jacks rolou </p>
+                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{5}}_24px.svg"></md-icon>
+                      <md-divider></md-divider>
+                  </md-list-item>
+                  <md-list-item>
+                      <p> Jacks rolou </p>
+                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{6}}_24px.svg"></md-icon>
+                      <md-divider></md-divider>
+                  </md-list-item>
+                  <md-list-item>
+                      <p> Jacks rolou </p>
+                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{1}}_24px.svg"></md-icon>
+                      <md-divider></md-divider>
+                  </md-list-item>
+              <md-divider></md-divider>              
+            </md-list>
+      </md-content>
+    </md-sidenav>    
     
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

@@ -75,7 +75,8 @@ function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $locatio
     $scope.user = $cookieStore.get('user');
     $scope.char = $cookies['char'];
     
-    $scope.toggleLeft = buildToggler('right');
+    $scope.toggleLeft = buildToggler('left');
+    $scope.toggleRight = buildToggler('right');
     
     function buildToggler(navID) {
       var debounceFn =  $mdUtil.debounce(function(){
@@ -89,10 +90,15 @@ function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $locatio
     }    
     
     $scope.close = function () {
-      $mdSidenav('right').close()
+      $mdSidenav('left').close()
         .then(function () {
 
         });
+        
+      $mdSidenav('right').close()
+        .then(function () {
+
+        });        
     };    
 
     if (!$scope.user && !$scope.char) {
