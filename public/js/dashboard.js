@@ -78,6 +78,8 @@ function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $locatio
     $scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
     
+    $scope.notifications = [];
+    
     function buildToggler(navID) {
       var debounceFn =  $mdUtil.debounce(function(){
             $mdSidenav(navID)
@@ -162,7 +164,34 @@ function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $locatio
           $location.path( path );
         });
       
-    };      
+    };   
+    
+    $scope.safeApply = function(fn) {
+      var phase = this.$root.$$phase;
+      if(phase == '$apply' || phase == '$digest') {
+        if(fn && (typeof(fn) === 'function')) {
+          fn();
+        }
+      } else {
+        this.$apply(fn);
+      }
+    };       
+    
+    $scope.rollTheDice = function() {
+        if ($scope.user) {
+
+            
+              $scope.notifications.push(
+              {
+                sender: 'narrador',
+                value: 1,
+                id: $scope.notifications.length + 1
+              }
+            );
+                        
+           
+        }
+    };    
 }
 
 var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, $upload, $mdDialog, PersonagemService) {

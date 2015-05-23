@@ -92,49 +92,18 @@
                   <span>Rolagem de Dados</span>
                 </h4>   
                 <span flex></span>            
-                <md-button class="md-icon-button" aria-label="Settings"  ng-click="close()">
+                <md-button class="md-icon-button" aria-label="Settings"  ng-click="rollTheDice()">
                   <md-icon md-svg-icon="bower_components//material-design-icons/image/svg/design/ic_looks_6_24px.svg"></md-icon>
                 </md-button>   
           </div>                       
       </md-toolbar>
       <md-content layout-padding>
             <md-list>
-                  <md-list-item>
-                      <p> Jacks rolou </p>
-                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{1}}_24px.svg"></md-icon>
+                  <md-list-item ng-repeat="notification in notifications">
+                      <p> {{notification.sender}}</p>
+                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{notification.value}}_24px.svg"></md-icon>
                       <md-divider></md-divider>
-                  </md-list-item>
-                  <md-list-item>
-                      <p> Jacks rolou </p>
-                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{2}}_24px.svg"></md-icon>
-                      <md-divider></md-divider>
-                  </md-list-item>
-                  <md-list-item>
-                      <p> Jacks rolou </p>
-                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{3}}_24px.svg"></md-icon>
-                      <md-divider></md-divider>
-                  </md-list-item>
-                  <md-list-item>
-                      <p> Jacks rolou </p>
-                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{4}}_24px.svg"></md-icon>
-                      <md-divider></md-divider>
-                  </md-list-item>
-                  <md-list-item>
-                      <p> Jacks rolou </p>
-                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{5}}_24px.svg"></md-icon>
-                      <md-divider></md-divider>
-                  </md-list-item>
-                  <md-list-item>
-                      <p> Jacks rolou </p>
-                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{6}}_24px.svg"></md-icon>
-                      <md-divider></md-divider>
-                  </md-list-item>
-                  <md-list-item>
-                      <p> Jacks rolou </p>
-                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{1}}_24px.svg"></md-icon>
-                      <md-divider></md-divider>
-                  </md-list-item>
-              <md-divider></md-divider>              
+                  </md-list-item>            
             </md-list>
       </md-content>
     </md-sidenav>    
