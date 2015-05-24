@@ -78,19 +78,49 @@ app.get('*', function(req, res) {
 		res.sendfile('./public/home.html'); // load the single view file 
 	});
 
-  
-io.on('connection', function(socket){
-    console.log('a user connected');
+io.sockets.on('connection', function (socket) {
 
+	// when the client emits 'adduser', this listens and executes
+	socket.on('jogadorConectado', function(aventura){
+		// store the room name in the socket session for this client
+		socket.room = aventura;
+		socket.join(aventura);
+        console.log('jogador conectado na aventura ' + aventura);
+
+		// echo to room 1 that a person has connected to their room
+//		socket.broadcast.to(aventura).emit('updatechat', 'SERVER', username + ' has connected to this room');
+//		socket.emit('updaterooms', rooms, 'room1');
+	});
+	
     socket.on('personagemAtualizado', function(personagem){
-        console.log('personagemAtualizado: ' + personagem);
-        io.emit('personagemAtualizado', personagem);        
-    });  
+        console.log('personagemAtualizado: ' + personagem.nome);
+        io.sockets.in(socket.room).emit('personagemAtualizado', personagem);        
+    });  	
+	
+    socket.on('dadoRolado', function(notificacao){
+        console.log('dadoRolado: ' + notificacao);
+        io.sockets.in(socket.room).emit('dadoRolado', notificacao);        
+    });  		
 
-    // socket.on('disconnect', function(){
-    //     console.log('user disconnected');
-    // });  
+	// when the user disconnects.. perform this
+	socket.on('disconnect', function(){
+        console.log('jogador desconectado da aventura ' + socket.room);
+		socket.leave(socket.room);
+	});
 });
+  
+//io.on('connection', function(socket){
+//    console.log('a user connected');
+//
+//    socket.on('personagemAtualizado', function(personagem){
+//        console.log('personagemAtualizado: ' + personagem);
+//        io.emit('personagemAtualizado', personagem);        
+//    });  
+//
+//    // socket.on('disconnect', function(){
+//    //     console.log('user disconnected');
+//    // });  
+//});
 
 	
 http.listen(app.get('port'), function() {

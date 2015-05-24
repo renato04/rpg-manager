@@ -214,6 +214,11 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
                 $cookieStore.put('aventura', personagem.aventura);
               }              
               
+              $socket.on('connect', function(){
+              		// call the server-side function 'adduser' and send one parameter (value of prompt)
+              		$socket.emit('jogadorConectado', personagem.aventura);
+            	});              
+              
               $socket.on('personagemAtualizado', function(personagem) {
                 $scope.personagem = personagem;
               });      
@@ -379,8 +384,11 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
                 $cookieStore.put('aventura', $stateParams.id);
                 $scope.aventura = response;
 
-              
-                
+                $socket.on('connect', function(){
+                		// call the server-side function 'adduser' and send one parameter (value of prompt)
+                		$socket.emit('jogadorConectado', $stateParams.id);
+              	});                 
+                  
                 carregarPersonagens();
             }
             else{
