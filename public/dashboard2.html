@@ -97,11 +97,11 @@
                 </md-button>   
           </div>                       
       </md-toolbar>
-      <md-content layout-padding>
+      <md-content layout-padding md-scroll-y>
             <md-list>
                   <md-list-item ng-repeat="notification in notifications">
                       <p> {{notification.sender}}</p>
-                        <md-icon md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{notification.value}}_24px.svg"></md-icon>
+                        <md-icon ng-click="removeNotificacao($index)" md-svg-icon="bower_components/material-design-icons/image/svg/design/ic_looks_{{notification.value}}_24px.svg"></md-icon>
                       <md-divider></md-divider>
                   </md-list-item>            
             </md-list>

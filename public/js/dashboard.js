@@ -68,9 +68,9 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider', 'cfp
  * Master Controller
  */
 angular.module('Dashboard')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', '$mdSidenav', '$mdUtil', '$location' , '$cookies',MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', '$mdSidenav', '$mdUtil', '$location' , '$cookies', '$socket',MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $location, $cookies) {
+function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $location, $cookies, $socket) {
     
     $scope.user = $cookieStore.get('user');
     $scope.char = $cookies['char'];
@@ -166,31 +166,42 @@ function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $locatio
       
     };   
     
-    $scope.safeApply = function(fn) {
-      var phase = this.$root.$$phase;
-      if(phase == '$apply' || phase == '$digest') {
-        if(fn && (typeof(fn) === 'function')) {
-          fn();
-        }
-      } else {
-        this.$apply(fn);
-      }
+    $scope.removeNotificacao = function(index) {
+      $scope.notifications.splice(index, 1);
     };       
     
     $scope.rollTheDice = function() {
+        var notificacao = null;
         if ($scope.user) {
 
-            
-              $scope.notifications.push(
+           notificacao = 
               {
                 sender: 'narrador',
-                value: 1,
+                value: Math.floor(Math.random() * (7 - 1)) + 1,
                 id: $scope.notifications.length + 1
-              }
+              };
+                         
+              $scope.notifications.splice(0, 0, 
+                notificacao
             );
                         
            
         }
+        else
+        {
+          notificacao = 
+              {
+                sender: $cookieStore.get('char'),
+                value: Math.floor(Math.random() * (7 - 1)) + 1,
+                id: $scope.notifications.length + 1
+              };          
+              $scope.notifications.splice(0, 0, 
+                notificacao
+            );          
+        }
+        
+        if(notificacao)
+          $socket.emit('dadoRolado', notificacao);
     };    
 }
 
@@ -212,6 +223,7 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
 
               if (!$scope.autenticado) {
                 $cookieStore.put('aventura', personagem.aventura);
+                $cookieStore.put('char', personagem.nome);
               }              
               
               $socket.on('connect', function(){
@@ -221,7 +233,13 @@ var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $windo
               
               $socket.on('personagemAtualizado', function(personagem) {
                 $scope.personagem = personagem;
-              });      
+              });     
+              
+              $socket.on('dadoRolado', function(notificacao) {
+                if (notificacao.sender != $scope.personagem.nome) {
+                    $scope.$parent.notifications.splice(0, 0, notificacao);
+                }
+              });                 
           }
           else{
               var dialog = $modal.open({
@@ -387,7 +405,13 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
                 $socket.on('connect', function(){
                 		// call the server-side function 'adduser' and send one parameter (value of prompt)
                 		$socket.emit('jogadorConectado', $stateParams.id);
-              	});                 
+              	});      
+                
+                $socket.on('dadoRolado', function(notificacao) {
+                  if (notificacao.sender != 'narrador') {
+                      $scope.$parent.notifications.splice(0, 0, notificacao);
+                  }
+                });                             
                   
                 carregarPersonagens();
             }
