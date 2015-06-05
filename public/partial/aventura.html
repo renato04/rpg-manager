@@ -1,12 +1,13 @@
 <div class="container-fluid">
   <md-subheader class="md-primary">Aventura</md-subheader>
               <!-- Page Heading -->
+   <form name="aventuraForm">
   <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Informações Gerais">
         <md-content class="md-padding">
           <md-card>
               <md-card-content>
-                <form name="aventuraForm">
+               
                   <md-input-container>
                     <input type="text" class="form-control"  placeholder="Nome" ng-model="aventura.nome" required>
                   </md-input-container>
@@ -14,27 +15,47 @@
                     <label>Resumo</label>
                     <textarea class="form-control" id="resumoAventura" rows="5" ng-model="aventura.resumo"></textarea>
                   </md-input-container>
-                </form> 
+
               </md-card-contet>
-              <div class="md-actions" layout="row" layout-align="end center">
+  
+          </md-card>        
+        </md-content>
+      </md-tab>
+    <md-tab label="Anotações">
+      <md-tab-body>
+      <md-content class="md-padding">
+			          <md-input-container no-flyout>
+			            <textarea type="text" class="form-control"  ng-model="aventura.anotacao"></textarea>
+			          </md-input-container>	
+        </md-content>
+       
+      </md-tab-body>
+    </md-tab>    
+  </md-tabs>
+                <div class="md-actions" layout="row" layout-align="end center">
                 <md-button class="md-icon-button md-primary" aria-label="Settings" ng-show="permiteAdicionarPersonagem()"  ng-click="go('/personagem')">
                   <md-icon md-svg-icon="bower_components/material-design-icons/social/svg/design/ic_person_add_24px.svg"></md-icon>
                 </md-button>                
                 <md-button class="md-raised md-primary" ng-disabled="aventuraForm.$invalid" ng-click="salvar()"> salvar</md-button>
-              </div>    
-          </md-card>        
-        </md-content>
-      </md-tab>
-      <md-tab label="{{personagem.nome}}" ng-repeat="personagem in personagens">
-        <md-content class="md-padding">
-            <md-card>
+              </div>   
+</form>   
+    
+<md-card ng-repeat="personagem in personagens">
+      <md-toolbar class="md-theme-light">
+          <div class="md-toolbar-tools">
+            
                 <a href="#/editar/personagem/{{personagem._id}}">
-                    <img src="{{getImageUrl(personagem) || 'img/avatar.jpg'}}" class="md-card-image" style="max-width:10%;max-height: 10%; padding: 2%;" alt="{{personagem.nome}}">
-                </a>
-                <md-card-content>
-                        <md-content>
-                          <md-card>
-                              <md-card-content>
+                    <img src="{{getImageUrl(personagem) || 'img/avatar.jpg'}}" class="md-card-image" style="max-width:25%;max-height: 25%;" alt="{{personagem.nome}}">
+                </a> 
+
+                <span flex></span>            
+          </div>                       
+      </md-toolbar> 
+ <md-card-content>
+                <h4>
+                  <span>{{personagem.nome}}</span>
+                </h4>    
+
              			<div class="row" ng-show="personagem._id">
             				<div class="col-xs-1 col-sm-1">
             					<p><b>HP:</b></p> 
@@ -71,155 +92,7 @@
                         <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('xp', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
                     </div>
                   </div>   
-                              </md-card-contet>
-  
-                          </md-card>        
-                        </md-content>                
-
-                  
-                                                           
-  
-                </md-card-content>
-         
-            </md-card>
-                  <md-tabs md-dynamic-height md-border-bottom>
-                      <md-tab label="Características">
-                        <md-content class="md-padding">
-                          <md-card>
-                              <md-card-content>
-                  <div class="table-responsive">
-                    
-                    <table class="table">
-                      <thead>
-                        <tr><th>Caracteristica</th><th>#</th><th></th></tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Força</td>
-                          <td>{{personagem.forca}}</td>
-                          <td>
-                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('forca', personagem)">
-                                <i class="fa fa-plus"></i>
-                              </a>
-                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('forca', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Habilidade</td>
-                          <td>{{personagem.habilidade}}</td>
-                          <td>
-                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('habilidade', personagem)"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('habilidade', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Resistência</td>
-                          <td>{{personagem.resistencia}}</td>
-                          <td>
-                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('resistencia', personagem)"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('resistencia', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Armadura</td>
-                          <td>{{personagem.armadura}}</td>
-                          <td>
-                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('armadura', personagem)"><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('armadura', personagem)"><i class="glyphicon glyphicon-minus">
-                              </i>
-                              </a>
-                          </td>
-                        </tr> 
-                        <tr>
-                          <td>Poder de Fogo</td>
-                          <td>{{personagem.poderDeFogo}}</td>
-                          <td>
-                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('poderDeFogo', personagem)" ><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('poderDeFogo', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Vida</td>
-                          <td>{{personagem.vida}}</td>
-                          <td>
-                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('vida', personagem)" ><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('vida', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Magia</td>
-                          <td>{{personagem.magia}}</td>
-                          <td>
-                              <a class="btn btn-primary btn-xs" ng-click="aumentaCaracteristica('magia', personagem)" ><i class="fa fa-plus"></i></a>
-                              <a class="btn btn-primary btn-xs" ng-click="diminuiCaracteristica('magia', personagem)"><i class="glyphicon glyphicon-minus"></i></a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    
-                  </div>  
-                              </md-card-contet>
-  
-                          </md-card>        
-                        </md-content>
-                      </md-tab>
-                      <md-tab label="Vantagens">
-                        <md-content class="md-padding">
-                          <md-card>
-                              <md-card-content>
-
-                  <md-input-container>
-                    <textarea class="form-control" id="resumoAventura" rows="5" >{{personagem.vantagens}}</textarea>
-                  </md-input-container>
-                              </md-card-contet>
-  
-                          </md-card>        
-                        </md-content>
-                      </md-tab>    
-                      <md-tab label="Desvantagens">
-                        <md-content class="md-padding">
-                          <md-card>
-                              <md-card-content>
-                 
-                  <md-input-container>
-                    <textarea class="form-control" id="resumoAventura" rows="5" >{{personagem.desvantagens}}  </textarea>
-                  </md-input-container> 
-                              </md-card-contet>
-  
-                          </md-card>        
-                        </md-content>
-                      </md-tab>      
-                      <md-tab label="Equipamentos">
-                        <md-content class="md-padding">
-                          <md-card>
-                              <md-card-content>
-                  <md-input-container>
-                    <textarea class="form-control" id="resumoAventura" rows="5" >{{personagem.equipamento}} </textarea>
-                  </md-input-container>                               
-
-                              </md-card-contet>
-  
-                          </md-card>        
-                        </md-content>
-                      </md-tab>   
-                      <md-tab label="Background">
-                        <md-content class="md-padding">
-                          <md-card>
-                              <md-card-content>
-                  <md-input-container>
-                    <textarea class="form-control" id="resumoAventura" rows="5" >{{personagem.background}} </textarea>
-                  </md-input-container>                               
-
-                              </md-card-contet>
-  
-                          </md-card>        
-                        </md-content>
-                      </md-tab>                                                                               
-                  </md-tabs>                 
-        </md-content>
-         
-      </md-tab>
-     
-    </md-tabs>
+ </md-card-content>
+</md-card>    
 
  
