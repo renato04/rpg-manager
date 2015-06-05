@@ -68,9 +68,9 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider', 'cfp
  * Master Controller
  */
 angular.module('Dashboard')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', '$mdSidenav', '$mdUtil', '$location' , '$cookies', '$socket',MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', '$mdSidenav', '$mdUtil', '$location' , '$cookies', '$socket', '$mdDialog', 'FeedbackService' , MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $location, $cookies, $socket) {
+function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $location, $cookies, $socket, $mdDialog, FeedbackService) {
     
     $scope.user = $cookieStore.get('user');
     $scope.char = $cookies['char'];
@@ -203,6 +203,38 @@ function MasterCtrl($scope, $cookieStore, $window, $mdSidenav, $mdUtil, $locatio
         if(notificacao)
           $socket.emit('dadoRolado', notificacao);
     };    
+    
+    $scope.enviaFeedback = function(ev) {
+        $mdDialog.show({
+          controller: DialogController,
+          templateUrl: 'partial/feedback-dialog.html',
+          targetEvent: ev,
+        })
+        .then(function(feedback) {
+        FeedbackService.salvar(feedback, function(err, feedback){
+            if (!err) {
+                $mdDialog.show(
+                  $mdDialog.alert()
+                    .parent(angular.element(document.body))
+                    .title('Muito obrgiado!')
+                    .content('Agradecemos a sua mensagem.')
+                    .ok('ok')
+                 );     
+            }
+            else{
+                $mdDialog.show(
+                  $mdDialog.alert()
+                    .parent(angular.element(document.body))
+                    .title('Atenção')
+                    .content('Falha ao salvar dados.')
+                    .ok('ok')
+                 );  
+            }
+        });          
+          
+        }, function() {
+        });
+      };    
 }
 
 var PersonagemCtrl = function($scope, $modal, $stateParams, $cookieStore, $window, $socket, $upload, $mdDialog, PersonagemService) {
@@ -581,34 +613,20 @@ var AventuraCtrl  = function ($scope, $modal, $cookieStore, $stateParams, $socke
     };    
 };
 
-var DialogCtrl = function($scope, $modalInstance, message, title){
-   $scope.message = message;
-   $scope.title = title;
-
-  $scope.ok = function () {
-    $modalInstance.close('ok');
-  };  
-};
-
-/**
- * Alerts Controller
- */
-angular.module('Dashboard').controller('AlertsCtrl', ['$scope', AlertsCtrl]);
-
-function AlertsCtrl($scope) {
-    $scope.alerts = [
-        { type: 'success', msg: 'Thanks for visiting! Feel free to create pull requests to improve the dashboard!' },
-        { type: 'danger', msg: 'Found a bug? Create an issue with as many details as you can.' }
-    ];
-
-    $scope.addAlert = function() {
-        $scope.alerts.push({msg: 'Another alert!'});
-    };
-
-    $scope.closeAlert = function(index) {
-        $scope.alerts.splice(index, 1);
-    };
+var DialogController = function ($scope, $mdDialog) {
+  $scope.feedback = {};
+  
+  $scope.hide = function() {
+    $mdDialog.hide();
+  };
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
+  $scope.answer = function(feedback) {
+    $mdDialog.hide(feedback);
+  };
 }
+
 
 /**
  * Loading Directive
@@ -724,6 +742,27 @@ function personagemService($http){
                 callback("Cannot get data!");
             });            
         } 
+    };
+};
+
+angular.module('Dashboard').factory("FeedbackService", ["$http", feedbackService]);
+
+function feedbackService($http){
+    return{
+        salvar:  function(feedback, callback) {
+            $http.post('/api/feedback', feedback)
+            .success(function(response) {
+                console.log("feedback adicionado com sucesso!");
+                if(callback)
+                    callback(null, feedback);
+            })
+            .error(function(response) {
+                console.log("error adding feedback!");
+                if(callback)
+                    callback("Cannot submit data!");
+            });
+        },
+
     };
 };
 

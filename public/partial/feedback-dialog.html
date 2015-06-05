@@ -1,0 +1,26 @@
+<md-dialog aria-label="Mango (Fruit)">
+  <form name="feedbackForm">
+        <md-toolbar md-scroll-shrink>
+          <div class="md-toolbar-tools docs-toolbar-tools">
+            <h2>
+              <span>Feedback</span>
+            </h2>
+            <span flex></span>
+          </div>
+        </md-toolbar>    
+  <md-dialog-content>
+  <p>Enive-nos a sua opinião sobre o nosso aplicativo.</p>
+    <md-input-container no-flyout >
+      <textarea type="text" class="form-control"  ng-model="feedback.mensagem" rows="10" md-maxlength="500" required></textarea>
+    </md-input-container>	  
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <md-button ng-click="cancel()" class="md-primary">
+     cancelar
+    </md-button>
+    <md-button ng-click="answer(feedback)" class="md-primary" ng-disabled="feedbackForm.$invalid">
+      enviar
+    </md-button>
+  </div>
+  </form>
+</md-dialog>
