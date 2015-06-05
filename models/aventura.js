@@ -12,7 +12,8 @@ var mongoose = require('mongoose');
 var AventuraSchema = new mongoose.Schema({
   nome: { type: String, required: true},
   resumo: { type: String, required: false },
-  usuario:{type: String, required:true}
+  usuario:{type: String, required:true},
+  anotacao:{type: String, required:false},
 });
 
 AventuraSchema.statics.findByUser = function(usuario, callback) {

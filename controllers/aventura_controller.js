@@ -16,6 +16,7 @@ exports.create = function(req, res, next) {
   aventura.nome = req.body.nome;
   aventura.resumo = req.body.resumo;
   aventura.usuario = req.body.usuario;
+  aventura.anotacao = req.body.anotacao;
 
   if (req.body._id) {
     Aventura.findById(req.body._id, function (err, aventura) {
@@ -24,6 +25,7 @@ exports.create = function(req, res, next) {
       aventura.nome = req.body.nome;
       aventura.resumo = req.body.resumo;
       aventura.usuario = req.body.usuario;
+      aventura.anotacao = req.body.anotacao;
       
       aventura.save(function (err) {
         if (err) return res.send(403);
